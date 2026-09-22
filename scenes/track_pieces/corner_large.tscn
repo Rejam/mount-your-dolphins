@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://otdnqscuxxtc"]
+
+[ext_resource type="PackedScene" uid="uid://dhd3t03g4abgo" path="res://assets/kenney_racing-kit/gltf/roadCornerLarge.glb" id="1_m0hv4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m0hv4"]
+size = Vector3(2, 0.1, 2)
+
+[node name="CornerLarge" type="Node3D" unique_id=1327520640]
+
+[node name="Model" parent="." unique_id=251786485 instance=ExtResource("1_m0hv4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.65, 0, 1.65)
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=104518862]
+
+[node name="Collision" type="CollisionShape3D" parent="Ground" unique_id=648922210]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_m0hv4")

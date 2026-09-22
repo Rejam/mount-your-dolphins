@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bpa061sg6wmdy"]
+
+[ext_resource type="PackedScene" uid="uid://bigbmj5cia3qx" path="res://assets/kenney_racing-kit/gltf/roadRamp.glb" id="1_q7o0b"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_q6m3h"]
+size = Vector3(1, 0.12, 1.04)
+
+[node name="Ramp" type="Node3D" unique_id=692983395]
+
+[node name="Model" parent="." unique_id=319724653 instance=ExtResource("1_q7o0b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, 0, 1.15)
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=885650630]
+
+[node name="Collision" type="CollisionShape3D" parent="Ground" unique_id=1225912243]
+transform = Transform3D(1, 0, 0, 0, 0.96547264, -0.2605045, 0, 0.2605045, 0.96547264, 0, 0.135, 0)
+shape = SubResource("BoxShape3D_q6m3h")

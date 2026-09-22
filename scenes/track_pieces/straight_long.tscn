@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://bpahtjqa2ph8"]
+
+[ext_resource type="PackedScene" uid="uid://beabt7dfejg74" path="res://assets/kenney_racing-kit/gltf/roadStraightLong.glb" id="1_h13ub"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2qhn4"]
+size = Vector3(1, 0.1, 2)
+
+[node name="StraightLong" type="Node3D" unique_id=600577951]
+
+[node name="Model" parent="." unique_id=1875031458 instance=ExtResource("1_h13ub")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.15, 0, 1.65)
+
+[node name="Ground" type="StaticBody3D" parent="." unique_id=1403108630]
+
+[node name="Collision" type="CollisionShape3D" parent="Ground" unique_id=955698439]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+shape = SubResource("BoxShape3D_2qhn4")

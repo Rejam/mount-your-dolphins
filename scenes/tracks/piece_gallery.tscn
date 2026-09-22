@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://lqju88bc016d"]
+
+[ext_resource type="PackedScene" uid="uid://dvndp5pwfgh4b" path="res://scenes/track_pieces/straight.tscn" id="1_sikmo"]
+[ext_resource type="PackedScene" uid="uid://bpahtjqa2ph8" path="res://scenes/track_pieces/straight_long.tscn" id="2_1hwfx"]
+[ext_resource type="PackedScene" uid="uid://otdnqscuxxtc" path="res://scenes/track_pieces/corner_large.tscn" id="3_k0o4j"]
+[ext_resource type="PackedScene" uid="uid://b55io38sfx4x6" path="res://scenes/track_pieces/corner_small.tscn" id="4_br64y"]
+[ext_resource type="PackedScene" uid="uid://dt5do6d452hb5" path="res://scenes/track_pieces/start.tscn" id="5_xp3su"]
+[ext_resource type="PackedScene" uid="uid://bpa061sg6wmdy" path="res://scenes/track_pieces/ramp.tscn" id="6_yivjg"]
+[ext_resource type="PackedScene" uid="uid://bl2mebivqfio6" path="res://scenes/track_pieces/ramp_long.tscn" id="7_ss7qa"]
+[ext_resource type="PackedScene" uid="uid://2ve1hnt6vy7k" path="res://scenes/track_pieces/straight_bridge.tscn" id="8_k5wo3"]
+[ext_resource type="PackedScene" uid="uid://xyun7j320upq" path="res://scenes/track_pieces/straight_bridge_start.tscn" id="9_klkm3"]
+[ext_resource type="PackedScene" uid="uid://76ee4bba47st" path="res://scenes/track_pieces/straight_bridge_mid.tscn" id="10_qngs6"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_4wxja"]
+sky_top_color = Color(0.38, 0.45, 0.55, 1)
+sky_horizon_color = Color(0.65, 0.67, 0.7, 1)
+ground_bottom_color = Color(0.2, 0.17, 0.13, 1)
+ground_horizon_color = Color(0.65, 0.67, 0.7, 1)
+
+[sub_resource type="Sky" id="Sky_p8e3b"]
+sky_material = SubResource("ProceduralSkyMaterial_4wxja")
+
+[sub_resource type="Environment" id="Environment_l8fc8"]
+background_mode = 2
+sky = SubResource("Sky_p8e3b")
+ambient_light_source = 3
+
+[node name="Gallery" type="Node3D" unique_id=559637623]
+
+[node name="Sun" type="DirectionalLight3D" parent="." unique_id=288489866]
+transform = Transform3D(0.81915206, 0.4698463, -0.32898995, 0, 0.57357645, 0.81915206, 0.57357645, -0.6710101, 0.46984634, 0, 10, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2126526044]
+environment = SubResource("Environment_l8fc8")
+
+[node name="roadStraight" parent="." unique_id=153734565 instance=ExtResource("1_sikmo")]
+
+[node name="roadStraightLong" parent="." unique_id=600577951 instance=ExtResource("2_1hwfx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)
+
+[node name="roadCornerLarge" parent="." unique_id=1327520640 instance=ExtResource("3_k0o4j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0)
+
+[node name="roadCornerSmall" parent="." unique_id=1977546146 instance=ExtResource("4_br64y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 0)
+
+[node name="roadStart" parent="." unique_id=1254226051 instance=ExtResource("5_xp3su")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0)
+
+[node name="roadRamp" parent="." unique_id=692983395 instance=ExtResource("6_yivjg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+
+[node name="roadRampLong" parent="." unique_id=203892969 instance=ExtResource("7_ss7qa")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 4)
+
+[node name="roadStraightBridge" parent="." unique_id=967026942 instance=ExtResource("8_k5wo3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 4)
+
+[node name="roadStraightBridgeStart" parent="." unique_id=1082621374 instance=ExtResource("9_klkm3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, 4)
+
+[node name="roadStraightBridgeMid" parent="." unique_id=361599135 instance=ExtResource("10_qngs6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 4)
