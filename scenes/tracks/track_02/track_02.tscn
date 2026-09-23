@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cttysw4rikq12"]
+
+[ext_resource type="Script" uid="uid://cwk6vn803tauw" path="res://scenes/tracks/race_track.gd" id="1_qh3rt"]
+[ext_resource type="ArrayMesh" uid="uid://bbmfpauq6m6c5" path="res://scenes/tracks/track_02/track_02_mesh.res" id="3_8ejja"]
+[ext_resource type="Shape3D" uid="uid://b8ro5fxxea3so" path="res://scenes/tracks/track_02/track_02_collision.res" id="4_ewjw2"]
+
+[sub_resource type="Curve3D" id="Curve3D_fhpk0"]
+closed = true
+_data = {
+"points": PackedVector3Array(2.4148598, -1.7671642, 9.035059, -2.4148598, 1.7671642, -9.035059, 0.0050697327, 3.407526, 2.1914434, -7.3187056, -0.8819313, 18.238869, 7.3187056, 0.8819313, -18.238869, 2.8059998, 7.313587, -30.987946, -10.474028, 2.6750717, -19.670044, 10.474028, -2.6750717, 19.670044, 40.77536, 0.053970337, -28.570118, -8.240257, -0.16322517, 2.9635239, 8.240257, 0.16322517, -2.9635239, 60.424065, 2.1128464, 16.021378, 4.479904, 2.2607489, 11.498871, -4.479904, -2.2607489, -11.498871, 85.186874, 6.8136196, -25.728024, 1.5001717, -0.71899414, 12.753609, -1.5001717, 0.71899414, -12.753609, 42.05262, 5.48221, -55.054558, -2.4839249, -2.3596735, -12.618149, 2.4839249, 2.3596735, 12.618149, 77.050674, 15.723888, -62.41427, 15.2533, 3.0724869, -24.860323, -15.2533, -3.0724869, 24.860323, 25.107986, 7.434576, -0.22431183),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 8
+
+[node name="Track02" type="Node3D" unique_id=1427628621]
+script = ExtResource("1_qh3rt")
+
+[node name="Route" type="Path3D" parent="." unique_id=556389993]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.14251, 0, 25.595543)
+curve = SubResource("Curve3D_fhpk0")
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="." unique_id=1757797232]
+mesh = ExtResource("3_8ejja")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CSGBakedMeshInstance3D" unique_id=1878028568]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBakedMeshInstance3D/StaticBody3D" unique_id=102213355]
+shape = ExtResource("4_ewjw2")

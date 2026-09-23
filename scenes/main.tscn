@@ -1,50 +1,47 @@
 [gd_scene format=3 uid="uid://bcjuf0jo60p2d"]
 
-[ext_resource type="Script" uid="uid://dy2lxx0w6tbsw" path="res://scripts/car.gd" id="1_o5qli"]
-[ext_resource type="PackedScene" uid="uid://bcfjpxvr7cxi0" path="res://assets/kenney_racing-kit/Models/GLTF format/raceCarRed.glb" id="2_0wfyh"]
-[ext_resource type="PackedScene" uid="uid://bhhca40n8ccy7" path="res://scenes/tracks/track_01.tscn" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://dl67tmr6reksh" path="res://scenes/main.gd" id="1_jyhfs"]
+[ext_resource type="Texture2D" uid="uid://d2rk3q8bt7jyi" path="res://assets/qwantani_afternoon_puresky_1k.exr" id="1_sugp2"]
+[ext_resource type="Material" uid="uid://conknjw4u3g8f" path="res://assets/water_material.tres" id="3_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://bhhca40n8ccy7" path="res://scenes/tracks/track_01/track_01.tscn" id="3_sugp2"]
+[ext_resource type="Script" uid="uid://peef7r1i3vne" path="res://scripts/race_camera.gd" id="4_tbgi4"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0wfyh"]
-sky_top_color = Color(0.38, 0.45, 0.55, 1)
-sky_horizon_color = Color(0.65, 0.67, 0.7, 1)
-ground_bottom_color = Color(0.2, 0.17, 0.13, 1)
-ground_horizon_color = Color(0.65, 0.67, 0.7, 1)
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_o6xl0"]
+panorama = ExtResource("1_sugp2")
 
-[sub_resource type="Sky" id="Sky_sugp2"]
-sky_material = SubResource("ProceduralSkyMaterial_0wfyh")
+[sub_resource type="Sky" id="Sky_tefeu"]
+sky_material = SubResource("PanoramaSkyMaterial_o6xl0")
 
-[sub_resource type="Environment" id="Environment_jyhfs"]
+[sub_resource type="Environment" id="Environment_tbgi4"]
 background_mode = 2
-sky = SubResource("Sky_sugp2")
-ambient_light_source = 3
+sky = SubResource("Sky_tefeu")
+fog_mode = 1
+fog_light_color = Color(0.53315943, 0.540835, 0.64487296, 1)
+fog_density = 0.1
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_sugp2"]
-size = Vector3(0.85, 0.5, 1.5)
+[sub_resource type="CylinderMesh" id="CylinderMesh_tlbcn"]
+material = ExtResource("3_jyhfs")
+top_radius = 500.0
+bottom_radius = 500.0
+height = 1.0
 
 [node name="Main" type="Node3D" unique_id=2117764201]
+script = ExtResource("1_jyhfs")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=1659510672]
-transform = Transform3D(0.81915206, 0.46984634, -0.32898995, 0, 0.57357645, 0.81915206, 0.57357645, -0.6710101, 0.46984634, 0, 0, 0)
+transform = Transform3D(0.81915206, 0.4698463, -0.32898995, 0, 0.57357645, 0.81915206, 0.57357645, -0.6710101, 0.46984634, 0, 31.70038, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1403657432]
-environment = SubResource("Environment_jyhfs")
+environment = SubResource("Environment_tbgi4")
 
-[node name="Car" type="CharacterBody3D" parent="." unique_id=748210890]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -5, 0.5, -4.5)
-script = ExtResource("1_o5qli")
-speed = 1.5
+[node name="Cars" type="Node3D" parent="." unique_id=405416383]
 
-[node name="Collision" type="CollisionShape3D" parent="Car" unique_id=1583263352]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
-shape = SubResource("BoxShape3D_sugp2")
+[node name="RaceCamera" type="Camera3D" parent="." unique_id=672563633]
+transform = Transform3D(0.599843, -0.63436174, 0.48762032, 0, 0.6094358, 0.79283565, -0.8001179, -0.47557694, 0.3655658, 0, 35.67816, 0)
+script = ExtResource("4_tbgi4")
 
-[node name="Model" parent="Car" unique_id=1760561888 instance=ExtResource("2_0wfyh")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.35, 0, 0.663)
-
-[node name="MainCamera" type="Camera3D" parent="." unique_id=159678897]
-transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 25, 0)
-projection = 1
-current = true
-size = 40.0
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1920967107]
+mesh = SubResource("CylinderMesh_tlbcn")
 
 [node name="Track" parent="." unique_id=1427628621 instance=ExtResource("3_sugp2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.9254875, 0)
