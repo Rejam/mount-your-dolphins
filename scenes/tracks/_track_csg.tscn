@@ -95,7 +95,7 @@ path_joined = true
 material = SubResource("ShaderMaterial_2l5n2")
 
 [node name="OuterEdge" type="CSGPolygon3D" parent="." unique_id=364434768]
-polygon = PackedVector2Array(-2, 0, -2, 0.4, -1.8, 0.4, -1.8, 0)
+polygon = PackedVector2Array(-1.4, -0.1, -2.2, 0.5, -2.5, 0.5, -2.5, -0.1)
 mode = 2
 path_node = NodePath("../../Route")
 path_interval_type = 0
@@ -109,7 +109,7 @@ path_u_distance = 1.0
 path_joined = true
 
 [node name="InnerEdge" type="CSGPolygon3D" parent="." unique_id=1055996294]
-polygon = PackedVector2Array(1.8, 0, 1.8, 0.4, 2, 0.4, 2, 0)
+polygon = PackedVector2Array(1.4, -0.1, 2.2, 0.5, 2.5, 0.5, 2.5, -0.1)
 mode = 2
 path_node = NodePath("../../Route")
 path_interval_type = 0
