@@ -19,10 +19,10 @@ script = ExtResource("1_qh3rt")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.14251, 0, 25.595543)
 curve = SubResource("Curve3D_fhpk0")
 
-[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="." unique_id=1757797232]
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="." unique_id=2116576514]
 mesh = ExtResource("3_8ejja")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="CSGBakedMeshInstance3D" unique_id=1878028568]
+[node name="StaticBody3D" type="StaticBody3D" parent="CSGBakedMeshInstance3D" unique_id=1986875342]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBakedMeshInstance3D/StaticBody3D" unique_id=102213355]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBakedMeshInstance3D/StaticBody3D" unique_id=202096918]
 shape = ExtResource("4_ewjw2")

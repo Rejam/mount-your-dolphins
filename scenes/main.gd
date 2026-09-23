@@ -34,9 +34,9 @@ func _place_on_grid(car: Car, grid_slot: int) -> void:
 func _spawn_car(grid_slot: int) -> void:
 	var car: Car = CAR_SCENE.instantiate()
 	car.name = "Car%d" % (grid_slot + 1)
-	#car.mode
 	cars_node.add_child(car)
-	var owner = OWNER_NAMES.get(grid_slot)
-	if owner: car.set_owner_name(owner)
+	if grid_slot < OWNER_NAMES.size():
+		car.set_owner_name(OWNER_NAMES[grid_slot])
+	car.set_tint(Color.from_hsv(randf(), 0.6, 1.0))
 	_place_on_grid(car, grid_slot)
 	cars.append(car)

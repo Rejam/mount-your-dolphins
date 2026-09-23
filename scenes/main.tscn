@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://dl67tmr6reksh" path="res://scenes/main.gd" id="1_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://d2rk3q8bt7jyi" path="res://assets/qwantani_afternoon_puresky_1k.exr" id="1_sugp2"]
 [ext_resource type="Material" uid="uid://conknjw4u3g8f" path="res://assets/water_material.tres" id="3_jyhfs"]
-[ext_resource type="PackedScene" uid="uid://bhhca40n8ccy7" path="res://scenes/tracks/track_01/track_01.tscn" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://peef7r1i3vne" path="res://scenes/camera/race_camera.gd" id="4_tbgi4"]
+[ext_resource type="PackedScene" uid="uid://cttysw4rikq12" path="res://scenes/tracks/track_02/track_02.tscn" id="5_tbgi4"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_o6xl0"]
 panorama = ExtResource("1_sugp2")
@@ -43,8 +43,8 @@ unique_name_in_owner = true
 transform = Transform3D(0.599843, -0.63436174, 0.48762032, 0, 0.6094358, 0.79283565, -0.8001179, -0.47557694, 0.3655658, 0, 35.67816, 0)
 script = ExtResource("4_tbgi4")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1920967107]
+[node name="Sea" type="MeshInstance3D" parent="." unique_id=551313418]
+transparency = 0.21
 mesh = SubResource("CylinderMesh_tlbcn")
 
-[node name="Track" parent="." unique_id=1427628621 instance=ExtResource("3_sugp2")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.9254875, 0)
+[node name="Track" parent="." unique_id=1427628621 instance=ExtResource("5_tbgi4")]

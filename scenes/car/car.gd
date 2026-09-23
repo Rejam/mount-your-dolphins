@@ -12,6 +12,7 @@ extends VehicleBody3D
 const DRIVE_SIGN := -1.0
 
 @onready var owner_label: Label3D = %OwnerLabel
+@onready var model: Dolphin = $Model
 
 func _ready() -> void:
 	# A low centre of mass keeps the car from rolling in corners.
@@ -58,3 +59,6 @@ func is_grounded() -> bool:
 
 func set_owner_name(owner_name: String) -> void:
 	owner_label.text = owner_name
+
+func set_tint(color: Color) -> void:
+	model.tint(color)
