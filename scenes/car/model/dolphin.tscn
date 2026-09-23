@@ -1,0 +1,32 @@
+[gd_scene format=3 uid="uid://jq6xpl2expg3"]
+
+[ext_resource type="PackedScene" uid="uid://cp2ax1mxtuv13" path="res://assets/dolphin.glb" id="1_63t4k"]
+[ext_resource type="Script" uid="uid://dcglx3ouwkdr1" path="res://scenes/car/model/dolphin.gd" id="2_4lxhm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4lxhm"]
+albedo_color = Color(0.8156863, 1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_btkqt"]
+material = SubResource("StandardMaterial3D_4lxhm")
+
+[node name="dolphin" unique_id=501462964 instance=ExtResource("1_63t4k")]
+script = ExtResource("2_4lxhm")
+
+[node name="Dolphin_mesh" parent="." index="0" unique_id=838820942]
+transform = Transform3D(-0.1, 0, -8.742278e-09, 0, 0.1, 0, 8.742278e-09, 0, -0.1, 0, 0, 0)
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="Dolphin_mesh" index="0" unique_id=1810724178]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5.7094073, 0)
+amount = 100
+lifetime = 0.4
+lifetime_randomness = 1.0
+fixed_fps = 10
+mesh = SubResource("BoxMesh_btkqt")
+emission_shape = 5
+emission_points = PackedVector3Array(-2, 0, 0, 2, 0, 0)
+emission_normals = PackedVector3Array()
+direction = Vector3(0, 0, -5)
+gravity = Vector3(0, -1, 1)
+initial_velocity_max = 10.0
+scale_amount_min = 0.01
+scale_amount_max = 0.05

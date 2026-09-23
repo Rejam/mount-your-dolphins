@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://d2rk3q8bt7jyi" path="res://assets/qwantani_afternoon_puresky_1k.exr" id="1_sugp2"]
 [ext_resource type="Material" uid="uid://conknjw4u3g8f" path="res://assets/water_material.tres" id="3_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://bhhca40n8ccy7" path="res://scenes/tracks/track_01/track_01.tscn" id="3_sugp2"]
-[ext_resource type="Script" uid="uid://peef7r1i3vne" path="res://scripts/race_camera.gd" id="4_tbgi4"]
+[ext_resource type="Script" uid="uid://peef7r1i3vne" path="res://scenes/camera/race_camera.gd" id="4_tbgi4"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_o6xl0"]
 panorama = ExtResource("1_sugp2")
@@ -27,6 +27,7 @@ height = 1.0
 
 [node name="Main" type="Node3D" unique_id=2117764201]
 script = ExtResource("1_jyhfs")
+car_count = 5
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=1659510672]
 transform = Transform3D(0.81915206, 0.4698463, -0.32898995, 0, 0.57357645, 0.81915206, 0.57357645, -0.6710101, 0.46984634, 0, 31.70038, 0)
@@ -35,8 +36,10 @@ transform = Transform3D(0.81915206, 0.4698463, -0.32898995, 0, 0.57357645, 0.819
 environment = SubResource("Environment_tbgi4")
 
 [node name="Cars" type="Node3D" parent="." unique_id=405416383]
+unique_name_in_owner = true
 
 [node name="RaceCamera" type="Camera3D" parent="." unique_id=672563633]
+unique_name_in_owner = true
 transform = Transform3D(0.599843, -0.63436174, 0.48762032, 0, 0.6094358, 0.79283565, -0.8001179, -0.47557694, 0.3655658, 0, 35.67816, 0)
 script = ExtResource("4_tbgi4")
 

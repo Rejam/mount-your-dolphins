@@ -1,18 +1,27 @@
 [gd_scene format=3 uid="uid://ch1ph3v6ippq6"]
 
 [ext_resource type="Script" uid="uid://c30u2f84xqj2q" path="res://scenes/car/car.gd" id="1_yhfra"]
-[ext_resource type="PackedScene" uid="uid://jq6xpl2expg3" path="res://scenes/car/dolphin.tscn" id="2_yhfra"]
+[ext_resource type="PackedScene" uid="uid://jq6xpl2expg3" path="res://scenes/car/model/dolphin.tscn" id="2_yhfra"]
+[ext_resource type="Script" uid="uid://bj4f66m18kdt" path="res://scenes/car/components/stickiness.gd" id="3_rytg7"]
+[ext_resource type="Script" uid="uid://beq2mqmtdwmcm" path="res://scenes/car/components/bumper.gd" id="4_x7uf8"]
+[ext_resource type="Script" uid="uid://nw3305dl450h" path="res://scenes/car/components/track_progress.gd" id="5_tcn38"]
+[ext_resource type="Script" uid="uid://baftjjlvhyum2" path="res://scenes/car/components/recovery.gd" id="6_b3ski"]
+[ext_resource type="Script" uid="uid://bpl84sxilwwpq" path="res://scenes/car/components/ai_driver.gd" id="7_u0012"]
+[ext_resource type="Script" uid="uid://dudss5xwec7cs" path="res://scenes/car/components/ai_driver_mood.gd" id="8_s371w"]
+[ext_resource type="Script" uid="uid://caunu7auakvmo" path="res://scenes/car/components/catchup.gd" id="9_xs4xl"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_sugp2"]
-size = Vector3(0.55, 0.3, 1.3)
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tbgi4"]
+friction = 0.0
 
-[node name="Car" type="VehicleBody3D" unique_id=1494116475]
-mass = 50.0
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xs4xl"]
+radius = 0.2
+height = 1.168457
+
+[node name="Car" type="VehicleBody3D" unique_id=1494116475 node_paths=PackedStringArray("wheels")]
+physics_material_override = SubResource("PhysicsMaterial_tbgi4")
 script = ExtResource("1_yhfra")
-
-[node name="Collision" type="CollisionShape3D" parent="." unique_id=1237095523]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
-shape = SubResource("BoxShape3D_sugp2")
+owner_name = "John"
+wheels = [NodePath("FrontLeft"), NodePath("FrontRight"), NodePath("BackLeft"), NodePath("BackRight")]
 
 [node name="FrontLeft" type="VehicleWheel3D" parent="." unique_id=101]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, 0.25, -0.34)
@@ -60,5 +69,48 @@ suspension_stiffness = 100.0
 damping_compression = 2.0
 damping_relaxation = 2.5
 
-[node name="dolphin2" parent="." unique_id=501462964 instance=ExtResource("2_yhfra")]
+[node name="Collision" type="CollisionShape3D" parent="." unique_id=1237095523]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.47572684, -0.16577148)
+shape = SubResource("CapsuleShape3D_xs4xl")
+
+[node name="Model" parent="." unique_id=501462964 instance=ExtResource("2_yhfra")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.18107268, 0)
+
+[node name="OwnerLabel" type="Label3D" parent="." unique_id=1571276867]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0933063, 0)
+billboard = 1
+text = "Cal Halbert"
+
+[node name="Wheels" type="Node3D" parent="." unique_id=2064992516]
+
+[node name="Stickiness" type="Node" parent="." unique_id=1725769939 node_paths=PackedStringArray("car")]
+script = ExtResource("3_rytg7")
+car = NodePath("..")
+
+[node name="Bumper" type="Node" parent="." unique_id=1584811378 node_paths=PackedStringArray("car")]
+script = ExtResource("4_x7uf8")
+car = NodePath("..")
+
+[node name="TrackProgress" type="Node" parent="." unique_id=1782231763 node_paths=PackedStringArray("car")]
+script = ExtResource("5_tcn38")
+car = NodePath("..")
+
+[node name="Recovery" type="Node" parent="." unique_id=731434275 node_paths=PackedStringArray("car", "progress")]
+script = ExtResource("6_b3ski")
+car = NodePath("..")
+progress = NodePath("../TrackProgress")
+
+[node name="AIDriver" type="Node" parent="." unique_id=1421917286 node_paths=PackedStringArray("car", "progress", "mood", "catch_up")]
+script = ExtResource("7_u0012")
+car = NodePath("..")
+progress = NodePath("../TrackProgress")
+mood = NodePath("../AIDriverMood")
+catch_up = NodePath("../Catchup")
+
+[node name="AIDriverMood" type="Node" parent="." unique_id=533520091]
+script = ExtResource("8_s371w")
+
+[node name="Catchup" type="Node" parent="." unique_id=1060256778 node_paths=PackedStringArray("progress")]
+script = ExtResource("9_xs4xl")
+progress = NodePath("../TrackProgress")
