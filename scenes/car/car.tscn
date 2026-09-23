@@ -20,7 +20,6 @@ height = 1.168457
 [node name="Car" type="VehicleBody3D" unique_id=1494116475 node_paths=PackedStringArray("wheels")]
 physics_material_override = SubResource("PhysicsMaterial_tbgi4")
 script = ExtResource("1_yhfra")
-owner_name = "John"
 wheels = [NodePath("FrontLeft"), NodePath("FrontRight"), NodePath("BackLeft"), NodePath("BackRight")]
 
 [node name="FrontLeft" type="VehicleWheel3D" parent="." unique_id=101]
@@ -80,7 +79,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.18107268, 0)
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0933063, 0)
 billboard = 1
-text = "Cal Halbert"
 
 [node name="Wheels" type="Node3D" parent="." unique_id=2064992516]
 

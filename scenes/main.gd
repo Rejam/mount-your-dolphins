@@ -13,13 +13,14 @@ const CAR_SCENE = preload("uid://ch1ph3v6ippq6")
 
 var cars: Array[Car]
 
+const OWNER_NAMES : Array[String] = [
+	"Cal Halbert", "Rejam", "BobMonkhouse", "SpeedyBrandon",
+#	"I Love Chips"
+]
+
 func _ready() -> void:
 	for i in car_count:
-		var car: Car = CAR_SCENE.instantiate()
-		car.name = "Car%d" % (i + 1)
-		cars_node.add_child(car)
-		_place_on_grid(car, i)
-		cars.append(car)
+		_spawn_car(i)
 	race_camera.set_targets(cars)
 
 
@@ -28,3 +29,14 @@ func _place_on_grid(car: Car, grid_slot: int) -> void:
 	var side := -1.0 if grid_slot % 2 == 0 else 1.0
 	var slot := Vector3(side, 0.3, 0.0)
 	car.global_transform = track.sample_transform(row_distance).translated_local(slot)
+
+
+func _spawn_car(grid_slot: int) -> void:
+	var car: Car = CAR_SCENE.instantiate()
+	car.name = "Car%d" % (grid_slot + 1)
+	#car.mode
+	cars_node.add_child(car)
+	var owner = OWNER_NAMES.get(grid_slot)
+	if owner: car.set_owner_name(owner)
+	_place_on_grid(car, grid_slot)
+	cars.append(car)

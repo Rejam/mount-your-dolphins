@@ -6,9 +6,6 @@ extends VehicleBody3D
 @export var max_brake := 3.0
 @export var max_steer := 0.55
 @export var steer_rate := 3.0
-
-@export var owner_name : String
-
 @export var wheels : Array[VehicleWheel3D]
 
 ## The car's front is -Z, so engine force is negated to drive forward.
@@ -20,8 +17,6 @@ func _ready() -> void:
 	# A low centre of mass keeps the car from rolling in corners.
 	center_of_mass_mode = CENTER_OF_MASS_MODE_CUSTOM
 	center_of_mass = Vector3(0.0, 0.15, 0.0)
-
-	owner_label.text = owner_name
 
 
 func get_speed() -> float:
@@ -60,3 +55,6 @@ func is_grounded() -> bool:
 		if wheel.is_in_contact():
 			return true
 	return false
+
+func set_owner_name(owner_name: String) -> void:
+	owner_label.text = owner_name
