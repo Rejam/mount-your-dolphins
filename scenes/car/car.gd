@@ -10,14 +10,31 @@ extends VehicleBody3D
 
 ## The car's front is -Z, so engine force is negated to drive forward.
 const DRIVE_SIGN := -1.0
+## car.tscn. Loaded rather than preloaded: car.tscn uses this script, so a
+## preload here would be a cyclic reference.
+const SCENE_PATH := "uid://ch1ph3v6ippq6"
+
+## Shown above the car. Set before adding the car to the tree.
+var owner_name := ""
 
 @onready var owner_label: Label3D = %OwnerLabel
 @onready var model: Dolphin = $Model
+
+
+## Makes a new car for a viewer. Add it to the tree, then place it.
+static func create(for_owner: String) -> Car:
+	var car: Car = load(SCENE_PATH).instantiate()
+	car.owner_name = for_owner
+	car.name = "Car_%s" % for_owner
+	return car
+
 
 func _ready() -> void:
 	# A low centre of mass keeps the car from rolling in corners.
 	center_of_mass_mode = CENTER_OF_MASS_MODE_CUSTOM
 	center_of_mass = Vector3(0.0, 0.15, 0.0)
+	owner_label.text = owner_name
+	model.tint(Color.from_hsv(randf(), 0.6, 1.0))
 
 
 func get_speed() -> float:
@@ -56,9 +73,3 @@ func is_grounded() -> bool:
 		if wheel.is_in_contact():
 			return true
 	return false
-
-func set_owner_name(owner_name: String) -> void:
-	owner_label.text = owner_name
-
-func set_tint(color: Color) -> void:
-	model.tint(color)

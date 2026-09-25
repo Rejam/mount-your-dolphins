@@ -12,12 +12,17 @@ _data = {
 }
 point_count = 10
 
-[node name="Track01" type="Node3D" unique_id=1427628621]
+[node name="Track01" type="Node3D" unique_id=1427628621 node_paths=PackedStringArray("start_line")]
 script = ExtResource("1_pflma")
+start_line = NodePath("Route/PathFollow3D")
 
 [node name="Route" type="Path3D" parent="." unique_id=556389993]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.14251, 0, 25.595543)
 curve = SubResource("Curve3D_fhpk0")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Route" unique_id=639617569]
+transform = Transform3D(0.9899241, 0.06690645, 0.12479124, -0.06707438, 0.99774337, -0.0028602043, -0.12470108, -0.005538913, 0.9921783, 87.240875, 11.043225, 21.085663)
+progress = 250.0
 
 [node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="." unique_id=139354950]
 mesh = ExtResource("1_d2a6i")
