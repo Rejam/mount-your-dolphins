@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://4ajvsc2u3fbx"]
+
+[ext_resource type="Script" uid="uid://cgyhcg6ajjwy4" path="res://autoloads/session.gd" id="1_4pg7r"]
+[ext_resource type="PackedScene" uid="uid://bhhca40n8ccy7" path="res://scenes/tracks/track_01/track_01.tscn" id="2_nt3m7"]
+[ext_resource type="PackedScene" uid="uid://cttysw4rikq12" path="res://scenes/tracks/track_02/track_02.tscn" id="3_6uee5"]
+
+[node name="Session" type="Node" unique_id=961916480]
+script = ExtResource("1_4pg7r")
+tracks = Array[PackedScene]([ExtResource("2_nt3m7"), ExtResource("3_6uee5")])
