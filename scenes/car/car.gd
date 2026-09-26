@@ -14,18 +14,18 @@ const DRIVE_SIGN := -1.0
 ## preload here would be a cyclic reference.
 const SCENE_PATH := "uid://ch1ph3v6ippq6"
 
-## Shown above the car. Set before adding the car to the tree.
-var owner_name := ""
+## Car owner
+var racer: RacerEntry
 
 @onready var owner_label: Label3D = %OwnerLabel
 @onready var model: Dolphin = $Model
 
 
 ## Makes a new car for a viewer. Add it to the tree, then place it.
-static func create(for_owner: String) -> Car:
+static func create(entry: RacerEntry) -> Car:
 	var car: Car = load(SCENE_PATH).instantiate()
-	car.owner_name = for_owner
-	car.name = "Car_%s" % for_owner
+	car.racer = entry
+	car.name = "Car_%s" % entry.user_id
 	return car
 
 
@@ -33,7 +33,7 @@ func _ready() -> void:
 	# A low centre of mass keeps the car from rolling in corners.
 	center_of_mass_mode = CENTER_OF_MASS_MODE_CUSTOM
 	center_of_mass = Vector3(0.0, 0.15, 0.0)
-	owner_label.text = owner_name
+	owner_label.text = racer.display_name
 	model.tint(Color.from_hsv(randf(), 0.6, 1.0))
 
 

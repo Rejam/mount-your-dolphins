@@ -27,7 +27,7 @@ height = 1.0
 
 [node name="Main" type="Node3D" unique_id=2117764201]
 script = ExtResource("1_jyhfs")
-car_count = 10
+test_racer_names = PackedStringArray("Cal Halbert", "Rejam", "BobMonkhouse", "SpeedyBrandon", "I Love Crisps")
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=1659510672]
 transform = Transform3D(0.81915206, 0.4698463, -0.32898995, 0, 0.57357645, 0.81915206, 0.57357645, -0.6710101, 0.46984634, 0, 31.70038, 0)

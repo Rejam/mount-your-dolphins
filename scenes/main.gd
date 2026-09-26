@@ -1,7 +1,7 @@
 extends Node3D
 ## Runs the race: spawns cars, has them driven round the track
 
-@export var car_count := 1
+@export var test_racer_names: PackedStringArray
 
 @onready var track: RaceTrack = $Track
 @onready var cars_node: Node3D = %Cars
@@ -9,19 +9,17 @@ extends Node3D
 
 var cars: Array[Car]
 
-const OWNER_NAMES : Array[String] = [
-	"Cal Halbert", "Rejam", "BobMonkhouse", "SpeedyBrandon", #"I Love Chips"
-]
 
 func _ready() -> void:
-	for i in car_count:
-		var owner_name := OWNER_NAMES[i] if i < OWNER_NAMES.size() else ""
-		_spawn_car(i, owner_name)
+	for index in test_racer_names.size():
+		var test_racer_name := test_racer_names[index]
+		var dummy_racer = RacerEntry.create_dummy(test_racer_name)
+		_spawn_car(index, dummy_racer)
 	race_camera.set_targets(cars)
 
 
-func _spawn_car(grid_slot: int, owner_name: String) -> void:
-	var car := Car.create(owner_name)
+func _spawn_car(grid_slot: int, racer: RacerEntry) -> void:
+	var car := Car.create(racer)
 	cars.append(car)
 	cars_node.add_child(car)
 	car.global_transform = track.get_grid_transform(grid_slot)
