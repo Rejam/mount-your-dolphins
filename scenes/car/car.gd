@@ -2,17 +2,17 @@ class_name Car
 extends VehicleBody3D
 ## A car that drives toward whatever point it's given. Knows nothing about tracks.
 
+## car.tscn. Loaded rather than preloaded: car.tscn uses this script, so a
+## preload here would be a cyclic reference.
+const CAR_SCENE_UID := "uid://ch1ph3v6ippq6"
+## The car's front is -Z, so engine force is negated to drive forward.
+const DRIVE_SIGN := -1.0
+
 @export var max_engine_force := 60.0
 @export var max_brake := 3.0
 @export var max_steer := 0.55
 @export var steer_rate := 3.0
 @export var wheels : Array[VehicleWheel3D]
-
-## The car's front is -Z, so engine force is negated to drive forward.
-const DRIVE_SIGN := -1.0
-## car.tscn. Loaded rather than preloaded: car.tscn uses this script, so a
-## preload here would be a cyclic reference.
-const SCENE_PATH := "uid://ch1ph3v6ippq6"
 
 ## Car owner
 var racer: RacerEntry
@@ -23,7 +23,7 @@ var racer: RacerEntry
 
 ## Makes a new car for a viewer. Add it to the tree, then place it.
 static func create(entry: RacerEntry) -> Car:
-	var car: Car = load(SCENE_PATH).instantiate()
+	var car: Car = load(CAR_SCENE_UID).instantiate()
 	car.racer = entry
 	car.name = "Car_%s" % entry.user_id
 	return car

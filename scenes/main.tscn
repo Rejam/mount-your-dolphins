@@ -4,7 +4,6 @@
 [ext_resource type="Texture2D" uid="uid://d2rk3q8bt7jyi" path="res://assets/qwantani_afternoon_puresky_1k.exr" id="1_sugp2"]
 [ext_resource type="Material" uid="uid://conknjw4u3g8f" path="res://assets/water_material.tres" id="3_jyhfs"]
 [ext_resource type="Script" uid="uid://peef7r1i3vne" path="res://scenes/camera/race_camera.gd" id="4_tbgi4"]
-[ext_resource type="PackedScene" uid="uid://cttysw4rikq12" path="res://scenes/tracks/track_02/track_02.tscn" id="5_tbgi4"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_o6xl0"]
 panorama = ExtResource("1_sugp2")
@@ -46,6 +45,3 @@ script = ExtResource("4_tbgi4")
 [node name="Sea" type="MeshInstance3D" parent="." unique_id=551313418]
 transparency = 0.21
 mesh = SubResource("CylinderMesh_tlbcn")
-
-[node name="Track" parent="." unique_id=1427628621 instance=ExtResource("5_tbgi4")]
-reversed = true
