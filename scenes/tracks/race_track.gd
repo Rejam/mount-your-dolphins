@@ -1,31 +1,33 @@
 class_name RaceTrack extends Node3D
 ## Track data. Route runs down the middle of the road.
 
+const GROUP := &"race_track"
+
 @export var track_width := 4.0
 @export var lap_count := 3
 ## Marks the start/finish line. Slide its Progress along the Route to move
 ## the start. All distances (grid, laps, steering, resets) count from here.
-## If left empty, uses the Route's first point.
 @export var start_line: PathFollow3D
 ## Distance between grid rows, in metres.
 @export var grid_spacing := 2.5
 @export var reversed := false
 
-@onready var route: Path3D = $Route
-var length := 0.0
+var lap_length : float
 ## Where the start line sits on the Route curve, in metres.
 var start_distance_along_route := 0.0
+var race_length : float:
+	get: return lap_length * lap_count
 
-const GROUP := &"race_track"
+@onready var route: Path3D = $Route
 
 func _enter_tree() -> void:
 	add_to_group(GROUP)
 
 
 func _ready() -> void:
-	length = route.curve.get_baked_length()
+	lap_length = route.curve.get_baked_length()
 	if start_line:
-		start_distance_along_route = wrapf(start_line.progress, 0.0, length)
+		start_distance_along_route = wrapf(start_line.progress, 0.0, lap_length)
 
 
 ## Metres past the start line, 0 to track length
@@ -39,8 +41,8 @@ func get_lap_distance(world_pos: Vector3) -> float:
 	# Invert if track is reversed
 	if reversed:
 		from_start = -from_start
-	# Keep within one lap, e.g. -5 becomes length - 5
-	return wrapf(from_start, 0.0, length)
+	# Keep within one lap, e.g. -5 becomes lap_length - 5
+	return wrapf(from_start, 0.0, lap_length)
 
 
 ## Converts a distance from the start line to a position on the Route curve.
@@ -49,7 +51,7 @@ func _distance_along_route(distance_from_start: float) -> float:
 	if reversed:
 		along_route = -distance_from_start
 	var distance_along_route := start_distance_along_route + along_route
-	return wrapf(distance_along_route, 0.0, length)
+	return wrapf(distance_along_route, 0.0, lap_length)
 
 
 func sample_position(distance_from_start: float) -> Vector3:
@@ -93,4 +95,4 @@ func get_grid_transform(grid_slot: int) -> Transform3D:
 ## Signed metres from one lap position to another, taking the short way
 ## round the loop. From 99 to 1 is +2, not -98
 func lap_distance_between(from: float, to: float) -> float:
-	return wrapf(to - from, -length * 0.5, length * 0.5)
+	return wrapf(to - from, -lap_length * 0.5, lap_length * 0.5)

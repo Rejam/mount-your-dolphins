@@ -36,6 +36,7 @@ func start_race(cars: Array[Car]) -> void:
 	grid_hold_timer.start()
 	standings.start(cars)
 	_set_all_cars_ai_active(false)
+	_register_car_track_progress()
 
 
 func _start_countdown() -> void:
@@ -75,6 +76,16 @@ func _on_countdown_timer_timeout() -> void:
 
 	_show_countdown(current_countdown)
 	countdown_timer.start()
+
+
+func _register_car_track_progress() -> void:
+	for car in standings.order:
+		var progress_component := TrackProgress.find_on(car)
+		progress_component.finished.connect(_on_car_finished)
+
+
+func _on_car_finished(car: Car) -> void:
+	standings.mark_finished(car, race_time)
 
 
 ## Placeholder until the countdown UI exists.

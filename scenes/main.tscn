@@ -51,7 +51,6 @@ mesh = SubResource("CylinderMesh_tlbcn")
 [node name="RaceDirector" parent="." unique_id=1724295570 node_paths=PackedStringArray("standings") instance=ExtResource("5_tefeu")]
 unique_name_in_owner = true
 standings = NodePath("../Standings")
-grid_hold_seconds = 3.0
 
 [node name="Standings" type="Node" parent="." unique_id=503860349]
 script = ExtResource("6_o6xl0")
