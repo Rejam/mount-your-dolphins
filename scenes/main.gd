@@ -13,6 +13,7 @@ var _track_scene: PackedScene
 
 @onready var cars_node: Node3D = %Cars
 @onready var race_camera: RaceCamera = %RaceCamera
+@onready var race_director: RaceDirector = %RaceDirector
 
 
 func _ready() -> void:
@@ -30,6 +31,7 @@ func _ready() -> void:
 	for grid_slot in _entries.size():
 		_spawn_car(grid_slot, _entries[grid_slot])
 	race_camera.set_targets(cars)
+	race_director.start_race(cars)
 
 
 static func create(entries: Array[RacerEntry], track_scene: PackedScene) -> Main:

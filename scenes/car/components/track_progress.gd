@@ -46,3 +46,11 @@ func reset(at_distance: float) -> void:
 	total_distance = at_distance
 	best_distance = at_distance
 	lap_distance = wrapf(at_distance, 0.0, track.length)
+
+
+static func find_on(parent: Node) -> TrackProgress:
+	for child in parent.get_children():
+		if child is TrackProgress:
+			return child
+	return null
+	

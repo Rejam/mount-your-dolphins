@@ -2,6 +2,7 @@ class_name RaceTrack extends Node3D
 ## Track data. Route runs down the middle of the road.
 
 @export var track_width := 4.0
+@export var lap_count := 3
 ## Marks the start/finish line. Slide its Progress along the Route to move
 ## the start. All distances (grid, laps, steering, resets) count from here.
 ## If left empty, uses the Route's first point.
