@@ -1,6 +1,11 @@
 class_name Standings extends Node
 
-var _racers: Array[StandingsEntry]
+## One racer's row in the standings.
+class Entry:
+	var car: Car
+	var progress: TrackProgress
+
+var _racers: Array[Entry]
 var order: Array[Car]
 var print_timer:= Timer.new()
 
@@ -26,7 +31,7 @@ func start(cars: Array[Car]) -> void:
 			))
 			continue
 		
-		var standing := StandingsEntry.new()
+		var standing := Entry.new()
 		standing.progress = progress_component
 		standing.car = car
 		
@@ -35,7 +40,7 @@ func start(cars: Array[Car]) -> void:
 
 
 ## True if a should be listed above b, i.e. a is further round the race.
-func _is_further_ahead(a: StandingsEntry, b: StandingsEntry) -> bool:
+func _is_further_ahead(a: Entry, b: Entry) -> bool:
 	var a_distance := a.progress.total_distance
 	var b_distance := b.progress.total_distance
 	return a_distance > b_distance
