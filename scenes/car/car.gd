@@ -13,6 +13,7 @@ const DRIVE_SIGN := -1.0
 @export var max_steer := 0.55
 @export var steer_rate := 3.0
 @export var wheels : Array[VehicleWheel3D]
+@export var ai_components: Array[Node]
 
 ## Car owner
 var racer: RacerEntry
@@ -73,3 +74,15 @@ func is_grounded() -> bool:
 		if wheel.is_in_contact():
 			return true
 	return false
+
+
+func set_ai_active(active: bool) -> void:
+	for component in ai_components:
+		if active:
+			component.process_mode = Node.PROCESS_MODE_INHERIT
+		else:
+			component.process_mode = Node.PROCESS_MODE_DISABLED
+
+	if not active:
+		engine_force = 0.0
+		brake = max_brake

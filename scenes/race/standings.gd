@@ -25,17 +25,11 @@ func _physics_process(_delta: float) -> void:
 func start(cars: Array[Car]) -> void:
 	for car in cars:
 		var progress_component := TrackProgress.find_on(car)
-		if not progress_component:
-			push_error("Standings: TrackProgress component not found on {car}".format({
-				"car": car.racer.display_name }
-			))
-			continue
+		var entry := Entry.new()
+		entry.progress = progress_component
+		entry.car = car
 		
-		var standing := Entry.new()
-		standing.progress = progress_component
-		standing.car = car
-		
-		_racers.append(standing)
+		_racers.append(entry)
 		order.append(car)
 
 

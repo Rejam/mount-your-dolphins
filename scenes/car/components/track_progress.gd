@@ -11,7 +11,7 @@ var total_distance := 0.0
 
 ## Like distance but does not go down if progresses backward
 ## Recovery uses it to decide whether the car is still making progress.
-var best_distance := 0.0
+var best_distance := -INF
 
 ## Metres into the current lap, 0 to track length.
 var lap_distance := 0.0

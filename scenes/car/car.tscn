@@ -17,10 +17,11 @@ friction = 0.0
 radius = 0.2
 height = 1.168457
 
-[node name="Car" type="VehicleBody3D" unique_id=1494116475 node_paths=PackedStringArray("wheels")]
+[node name="Car" type="VehicleBody3D" unique_id=1494116475 node_paths=PackedStringArray("wheels", "ai_components")]
 physics_material_override = SubResource("PhysicsMaterial_tbgi4")
 script = ExtResource("1_yhfra")
 wheels = [NodePath("FrontLeft"), NodePath("FrontRight"), NodePath("BackLeft"), NodePath("BackRight")]
+ai_components = [NodePath("TrackProgress"), NodePath("Recovery"), NodePath("AIDriver"), NodePath("AIDriverMood"), NodePath("Catchup")]
 
 [node name="FrontLeft" type="VehicleWheel3D" parent="." unique_id=101]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, 0.25, -0.34)

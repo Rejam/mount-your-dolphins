@@ -32,6 +32,7 @@ func _ready() -> void:
 		_spawn_car(grid_slot, _entries[grid_slot])
 	race_camera.set_targets(cars)
 	race_director.start_race(cars)
+	race_director.race_time = 100
 
 
 static func create(entries: Array[RacerEntry], track_scene: PackedScene) -> Main:
@@ -39,7 +40,6 @@ static func create(entries: Array[RacerEntry], track_scene: PackedScene) -> Main
 	main._entries = entries
 	main._track_scene = track_scene
 	return main
-
 
 
 ## Builds the track with a random direction. Returns false if no scene or the scene isn't a RaceTrack.
@@ -64,6 +64,10 @@ func _spawn_track(track_scene: PackedScene) -> bool:
 
 func _spawn_car(grid_slot: int, racer: RacerEntry) -> void:
 	var car := Car.create(racer)
+	var can_race := _can_race(car)
+	if not can_race: 
+		car.free()
+		return
 	cars.append(car)
 	cars_node.add_child(car)
 	car.global_transform = track.get_grid_transform(grid_slot)
@@ -78,3 +82,12 @@ func _make_test_racers() -> Array[RacerEntry]:
 		push_warning("Main: run on its own with no test_racer_names, so no cars will spawn")
 	return test_racers
 	
+
+func _can_race(car: Car) -> bool:
+	var progress_component := TrackProgress.find_on(car)
+	if not progress_component:
+		push_error("Main: TrackProgress component not found on {car}".format({
+			"car": car.racer.display_name }
+		))
+		return false
+	return true
