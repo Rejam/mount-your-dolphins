@@ -76,6 +76,10 @@ func is_grounded() -> bool:
 	return false
 
 
+func remove_from_play() -> void:
+	process_mode = Node.PROCESS_MODE_DISABLED
+
+
 func set_ai_active(active: bool) -> void:
 	for component in ai_components:
 		if active:

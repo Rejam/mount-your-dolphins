@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bpl84sxilwwpq" path="res://scenes/car/components/ai_driver.gd" id="7_u0012"]
 [ext_resource type="Script" uid="uid://dudss5xwec7cs" path="res://scenes/car/components/ai_driver_mood.gd" id="8_s371w"]
 [ext_resource type="Script" uid="uid://caunu7auakvmo" path="res://scenes/car/components/catchup.gd" id="9_xs4xl"]
+[ext_resource type="Script" uid="uid://csi1abwndpghx" path="res://scenes/car/components/exit_on_finish.gd" id="10_dmhln"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tbgi4"]
 friction = 0.0
@@ -115,3 +116,10 @@ script = ExtResource("9_xs4xl")
 progress = NodePath("../TrackProgress")
 max_boost = 0.1
 full_boost_gap = 100.0
+
+[node name="ExitOnFinish" type="Node" parent="." unique_id=1302012520 node_paths=PackedStringArray("car", "progress", "model")]
+process_mode = 1
+script = ExtResource("10_dmhln")
+car = NodePath("..")
+progress = NodePath("../TrackProgress")
+model = NodePath("../Model")
