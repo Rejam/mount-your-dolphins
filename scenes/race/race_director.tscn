@@ -14,3 +14,8 @@ one_shot = true
 unique_name_in_owner = true
 process_callback = 0
 one_shot = true
+
+[node name="FinishLimitTimer" type="Timer" parent="." unique_id=2014560238]
+unique_name_in_owner = true
+process_callback = 0
+one_shot = true

@@ -113,3 +113,5 @@ script = ExtResource("8_s371w")
 [node name="Catchup" type="Node" parent="." unique_id=1060256778 node_paths=PackedStringArray("progress")]
 script = ExtResource("9_xs4xl")
 progress = NodePath("../TrackProgress")
+max_boost = 0.1
+full_boost_gap = 100.0

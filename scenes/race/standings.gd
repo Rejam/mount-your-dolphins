@@ -10,14 +10,6 @@ class Entry:
 
 var _racers: Array[Entry]
 var order: Array[Car]
-var print_timer:= Timer.new()
-
-
-func _ready() -> void:
-	print_timer.wait_time = 5
-	print_timer.timeout.connect(_print_order)
-	add_child(print_timer)
-	print_timer.start()
 
 
 func _physics_process(_delta: float) -> void:
@@ -72,12 +64,12 @@ func _has_finished(entry: Entry) -> bool:
 	return entry.finish_time != NOT_FINISHED
 
 
-func _print_order() -> void:
-	for index in order.size():
-		var placement := index + 1
-		var car := order[index]
-		print("{placement}: {name}".format({
-			"placement": placement,
-			"name": car.racer.display_name,
-		}))
-	print("=========================")
+func finish_time_of(car: Car) -> float:
+	for racer in _racers:
+		if car == racer.car:
+			return racer.finish_time
+	return NOT_FINISHED
+
+
+func has_everyone_finished() -> bool:
+	return _racers.all(_has_finished)

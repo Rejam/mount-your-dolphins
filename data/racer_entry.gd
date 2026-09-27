@@ -3,12 +3,12 @@ class_name RacerEntry extends RefCounted
 var user_id: String
 var display_name: String
 
-
 static func create(racer_id: String, racer_name: String) -> RacerEntry:
 	var racer := RacerEntry.new()
 	racer.user_id = racer_id
 	racer.display_name = racer_name
 	return racer
+
 
 static var dummy_counter := 0
 
