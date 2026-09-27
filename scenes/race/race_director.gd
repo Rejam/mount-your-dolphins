@@ -125,8 +125,7 @@ func _end_race() -> void:
 	print_order_timer.stop()
 	print("Race finished")
 	var results := _build_race_results()
-	for result in results:
-		print(result.entry.display_name, result.finished, result.finish_time, result.position)
+	_print_results(results)
 
 
 func _build_race_results() -> Array[RaceResult]:
@@ -171,6 +170,15 @@ func _setup_print_order_timer() -> void:
 	add_child(print_order_timer)
 	print_order_timer.start()
 
+
+func _print_results(results: Array[RaceResult]) -> void:
+	for result in results:
+		print("{position}: {name} *{finished}*: {time}".format({
+			"position": result.position,
+			"name": result.entry.display_name,
+			"finished": result.finished,
+			"time": result.finish_time,
+		}))
 
 func _print_order() -> void:
 	for index in standings.order.size():
