@@ -68,8 +68,8 @@ func _go() -> void:
 
 
 func _set_all_cars_ai_active(active: bool) -> void:
-	for car in standings.order:
-		car.set_ai_active(active)
+	for place in standings.order:
+		place.car.set_ai_active(active)
 
 
 func _on_grid_hold_timer_timeout() -> void:
@@ -95,8 +95,8 @@ func _finish_limit_timer_timeout() -> void:
 
 
 func _register_car_track_progress() -> void:
-	for car in standings.order:
-		var progress_component := TrackProgress.find_on(car)
+	for place in standings.order:
+		var progress_component := TrackProgress.find_on(place.car)
 		progress_component.finished.connect(_on_car_finished)
 
 
@@ -132,32 +132,20 @@ func _end_race() -> void:
 func _build_race_results() -> Array[RaceResult]:
 	var results : Array[RaceResult] = []
 
-	for index in standings.order.size():
-		var car := standings.order[index]
+	for place in standings.order:
 		var result := RaceResult.new()
-		var finish_time := standings.finish_time_of(car)
-		var previous_car_result: RaceResult = null if index == 0 else results[index - 1]
 		
-		result.entry = car.racer
-		result.finish_time = finish_time
-		result.finished = finish_time != Standings.NOT_FINISHED
-		result.position = _get_race_position(finish_time, previous_car_result, index + 1)
+		result.entry = place.car.racer
+		result.finish_time = place.finish_time
+		result.finished = place.has_finished
+		if place.has_finished:
+			result.position = place.position
+		else:
+			result.position = RaceResult.NO_POSITION
 		
 		results.append(result)
 
 	return results
-
-
-func _get_race_position(finish_time: float, prev_car_result: RaceResult, position_if_not_tied: int) -> int:
-	if finish_time == Standings.NOT_FINISHED:
-		return RaceResult.NO_POSITION
-	# is first and the winner
-	if not prev_car_result:
-		return 1
-	# is same as previous logged racer so tie
-	if  prev_car_result.finish_time == finish_time:
-		return prev_car_result.position
-	return position_if_not_tied
 
 
 ## Placeholder until the countdown UI exists.
@@ -183,10 +171,9 @@ func _print_results(results: Array[RaceResult]) -> void:
 
 func _print_order() -> void:
 	for index in standings.order.size():
-		var placement := index + 1
-		var car := standings.order[index]
-		print("{placement}: {name}".format({
-			"placement": placement,
-			"name": car.racer.display_name,
+		var place := standings.order[index]
+		print("{position}: {name}".format({
+			"position": place.position,
+			"name": place.car.racer.display_name,
 		}))
 	print("=========================")
