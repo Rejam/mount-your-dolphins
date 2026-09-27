@@ -12,6 +12,10 @@ var _racers: Array[Entry]
 var order: Array[Car]
 
 
+func _ready() -> void:
+	set_physics_process(false)
+
+
 func _physics_process(_delta: float) -> void:
 	_racers.sort_custom(_is_further_ahead)
 	_rebuild_order()
@@ -26,6 +30,10 @@ func start(cars: Array[Car]) -> void:
 		
 		_racers.append(entry)
 		order.append(car)
+
+
+func start_ranking() -> void:
+	set_physics_process(true)
 
 
 func mark_finished(car: Car, race_time: float) -> void:
@@ -48,8 +56,8 @@ func _is_further_ahead(a: Entry, b: Entry) -> bool:
 	if _has_finished(b):
 		return false
 
-	var a_distance := a.progress.total_distance
-	var b_distance := b.progress.total_distance
+	var a_distance := a.progress.distance_from_start
+	var b_distance := b.progress.distance_from_start
 	return a_distance > b_distance
 
 

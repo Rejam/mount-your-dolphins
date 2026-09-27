@@ -54,7 +54,7 @@ func _distance_along_route(distance_from_start: float) -> float:
 	return wrapf(distance_along_route, 0.0, lap_length)
 
 
-func sample_position(distance_from_start: float) -> Vector3:
+func _sample_position(distance_from_start: float) -> Vector3:
 	var distance_along_route := _distance_along_route(distance_from_start)
 	var local_pos := route.curve.sample_baked(distance_along_route, true)
 	return route.to_global(local_pos)
@@ -62,12 +62,12 @@ func sample_position(distance_from_start: float) -> Vector3:
 
 ## Direction of travel, from two points half a metre either side.
 func sample_tangent(distance_from_start: float) -> Vector3:
-	var behind := sample_position(distance_from_start - 0.5)
-	var ahead := sample_position(distance_from_start + 0.5)
+	var behind := _sample_position(distance_from_start - 0.5)
+	var ahead := _sample_position(distance_from_start + 0.5)
 	return (ahead - behind).normalized()
 
 
-func sample_up(distance_from_start: float) -> Vector3:
+func _sample_up(distance_from_start: float) -> Vector3:
 	var distance_along_route := _distance_along_route(distance_from_start)
 	var local_up := route.curve.sample_baked_up_vector(distance_along_route, true)
 	return route.global_basis * local_up
@@ -76,9 +76,9 @@ func sample_up(distance_from_start: float) -> Vector3:
 ## The road at a distance along the track: the centre of the road,
 ## facing along it, tilted with any banking.
 func sample_transform(distance_from_start: float) -> Transform3D:
-	var pos := sample_position(distance_from_start)
+	var pos := _sample_position(distance_from_start)
 	var forward := sample_tangent(distance_from_start)
-	var up := sample_up(distance_from_start)
+	var up := _sample_up(distance_from_start)
 	var facing := Basis.looking_at(forward, up)
 	return Transform3D(facing, pos)
 

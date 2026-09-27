@@ -17,8 +17,8 @@ class_name AIDriver extends Node
 @export var edge_margin := 0.5
 
 func _physics_process(delta: float) -> void:
-	var distance := progress.total_distance
-	car.drive_toward(_aim_point(distance), _target_speed(distance), delta, 1.0 + _boost())
+	var distance_from_start := progress.distance_from_start
+	car.drive_toward(_aim_point(distance_from_start), _target_speed(distance_from_start), delta, 1.0 + _boost())
 
 
 ## Where to steer: a point ahead on the road, in the driver's chosen lane.

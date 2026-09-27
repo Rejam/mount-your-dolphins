@@ -64,6 +64,7 @@ func _go() -> void:
 	current_phase = Phase.RACING
 	_set_all_cars_ai_active(true)
 	_race_time = 0.0
+	standings.start_ranking()
 
 
 func _set_all_cars_ai_active(active: bool) -> void:

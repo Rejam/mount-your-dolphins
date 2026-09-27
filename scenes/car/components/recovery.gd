@@ -22,9 +22,9 @@ func _physics_process(delta: float) -> void:
 
 ## True once best hasn't advanced by min_progress for stuck_time seconds.
 func _is_stuck(delta: float) -> bool:
-	var has_made_progress := progress.best_distance >= _checkpoint + min_progress
+	var has_made_progress := progress.best_distance_from_start >= _checkpoint + min_progress
 	if has_made_progress:
-		_checkpoint = progress.best_distance
+		_checkpoint = progress.best_distance_from_start
 		_stuck_timer = 0.0
 		return false
 	_stuck_timer += delta
@@ -34,7 +34,7 @@ func _is_stuck(delta: float) -> bool:
 ## Put the car back on the track just past the furthest point it reached.
 func _recover() -> void:
 	var track := progress.track
-	var at_distance := progress.best_distance + reset_ahead
+	var at_distance := progress.best_distance_from_start + reset_ahead
 	var recovery_point := track.sample_transform(at_distance)
 	recovery_point = recovery_point.translated_local(Vector3.UP * 0.3)
 	car.reset_to(recovery_point)

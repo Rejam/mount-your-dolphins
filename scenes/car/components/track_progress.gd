@@ -9,15 +9,15 @@ signal finished(car: Car)
 var track : RaceTrack
 ## Progress travelled along track. Starts negative before race start
 ## Continues increasing each lap
-var total_distance := 0.0
+var distance_from_start := 0.0
 ## Like distance but does not go down if progresses backward
 ## Recovery uses it to decide whether the car is still making progress.
-var best_distance := -INF
+var best_distance_from_start := -INF
 ## Metres into the current lap, 0 to track length.
 var lap_distance := 0.0
 ## Current lap, starting at 1. Still 1 on the grid, before the start line.
 var lap: int:
-	get: return maxi(floori(total_distance / track.lap_length) + 1, 1)
+	get: return maxi(floori(distance_from_start / track.lap_length) + 1, 1)
 var has_finished := false
 
 func _enter_tree() -> void:
@@ -36,18 +36,19 @@ func _physics_process(_delta: float) -> void:
 func _update_progress() -> void:
 	var new_lap_distance := track.get_lap_distance(car.global_position)
 	var moved := track.lap_distance_between(lap_distance, new_lap_distance)
-	lap_distance = new_lap_distance
-	total_distance += moved
-	best_distance = maxf(best_distance, total_distance)
 	
-	if not has_finished and total_distance >= track.race_length:
+	lap_distance = new_lap_distance
+	distance_from_start += moved
+	best_distance_from_start = maxf(best_distance_from_start, distance_from_start)
+	
+	if not has_finished and distance_from_start >= track.race_length:
 		has_finished = true
 		finished.emit(car)
 
 
 func reset(at_distance: float) -> void:
-	total_distance = at_distance
-	best_distance = at_distance
+	distance_from_start = at_distance
+	best_distance_from_start = at_distance
 	lap_distance = wrapf(at_distance, 0.0, track.lap_length)
 
 

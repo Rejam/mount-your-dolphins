@@ -12,12 +12,12 @@ var boost := 0.0
 
 
 func _physics_process(_delta: float) -> void:
-	var gap := _leader_distance() - progress.total_distance
+	var gap := _leader_distance() - progress.distance_from_start
 	boost = max_boost * clampf(gap / full_boost_gap, 0.0, 1.0)
 
 
 func _leader_distance() -> float:
 	var leader := -INF
 	for other: TrackProgress in get_tree().get_nodes_in_group(TrackProgress.GROUP):
-		leader = maxf(leader, other.total_distance)
+		leader = maxf(leader, other.distance_from_start)
 	return leader
