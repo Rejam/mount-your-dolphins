@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c30u2f84xqj2q" path="res://scenes/car/car.gd" id="1_yhfra"]
 [ext_resource type="PackedScene" uid="uid://jq6xpl2expg3" path="res://scenes/car/model/dolphin.tscn" id="2_yhfra"]
+[ext_resource type="PackedScene" uid="uid://dqqtn2ljx1oqe" path="res://scenes/car/components/position_tag.tscn" id="3_duf8q"]
 [ext_resource type="Script" uid="uid://bj4f66m18kdt" path="res://scenes/car/components/stickiness.gd" id="3_rytg7"]
 [ext_resource type="Script" uid="uid://beq2mqmtdwmcm" path="res://scenes/car/components/bumper.gd" id="4_x7uf8"]
 [ext_resource type="Script" uid="uid://nw3305dl450h" path="res://scenes/car/components/track_progress.gd" id="5_tcn38"]
@@ -82,6 +83,11 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0933063, 0)
 billboard = 1
 
+[node name="PositionTag" parent="." unique_id=1839587390 node_paths=PackedStringArray("car") instance=ExtResource("3_duf8q")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.260367, 0)
+car = NodePath("..")
+
 [node name="Wheels" type="Node3D" parent="." unique_id=2064992516]
 
 [node name="Stickiness" type="Node" parent="." unique_id=1725769939 node_paths=PackedStringArray("car")]
@@ -113,9 +119,9 @@ script = ExtResource("8_s371w")
 
 [node name="Catchup" type="Node" parent="." unique_id=1060256778 node_paths=PackedStringArray("progress")]
 script = ExtResource("9_xs4xl")
-progress = NodePath("../TrackProgress")
 max_boost = 0.1
 full_boost_gap = 100.0
+progress = NodePath("../TrackProgress")
 
 [node name="ExitOnFinish" type="Node" parent="." unique_id=1302012520 node_paths=PackedStringArray("car", "progress", "model")]
 process_mode = 1

@@ -1,5 +1,6 @@
 class_name Standings extends Node
 
+const GROUP := &"standings"
 const NOT_FINISHED := INF
 
 ## One racer's row in the standings.
@@ -15,6 +16,10 @@ class Placing:
 ## Racers from leader to last. Starts in grid order; re-ranked every
 ## physics frame once start_ranking() is called.
 var order: Array[Placing]
+
+
+func _enter_tree() -> void:
+	add_to_group(GROUP)
 
 
 func _ready() -> void:
@@ -73,6 +78,12 @@ func has_everyone_finished() -> bool:
 			return false
 	return true
 
+
+func get_position(car: Car) -> int:
+	for place in order:
+		if place.car == car:
+			return place.position
+	return RaceResult.NO_POSITION
 
 func _rank() -> void:
 	order.sort_custom(_is_further_ahead)

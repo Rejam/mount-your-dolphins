@@ -17,8 +17,6 @@ var _race_time := 0.0
 ## Seconds since GO. Read-only from outside; only RaceDirector advances it.
 var race_time: float:
 	get: return _race_time
-# debug timer while no onscreen hud
-var print_order_timer:= Timer.new()
 
 
 func _ready() -> void:
@@ -29,8 +27,6 @@ func _ready() -> void:
 	
 	finish_limit_timer.wait_time = finish_time_limit_seconds
 	finish_limit_timer.timeout.connect(_finish_limit_timer_timeout)
-	
-	_setup_print_order_timer()
 
 
 func _physics_process(delta: float) -> void:
@@ -123,7 +119,6 @@ func _end_race() -> void:
 
 	current_phase = Phase.FINISHED
 	finish_limit_timer.stop()
-	print_order_timer.stop()
 	print("Race finished")
 	var results := _build_race_results()
 	_print_results(results)
@@ -153,13 +148,6 @@ func _show_countdown(count: int) -> void:
 	print(count)
 
 
-func _setup_print_order_timer() -> void:
-	print_order_timer.wait_time = 5
-	print_order_timer.timeout.connect(_print_order)
-	add_child(print_order_timer)
-	print_order_timer.start()
-
-
 func _print_results(results: Array[RaceResult]) -> void:
 	for result in results:
 		print("{position}: {name} *{finished}*: {time}".format({
@@ -168,12 +156,3 @@ func _print_results(results: Array[RaceResult]) -> void:
 			"finished": result.finished,
 			"time": result.finish_time,
 		}))
-
-func _print_order() -> void:
-	for index in standings.order.size():
-		var place := standings.order[index]
-		print("{position}: {name}".format({
-			"position": place.position,
-			"name": place.car.racer.display_name,
-		}))
-	print("=========================")
