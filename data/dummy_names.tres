@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="DummyNameList" format=3 uid="uid://ha862p3pl066"]
+
+[ext_resource type="Script" uid="uid://cqq5fd0wq0i83" path="res://data/dummy_name_list.gd" id="1_htjyq"]
+
+[resource]
+script = ExtResource("1_htjyq")
+names = PackedStringArray("FinnDiesel", "Flipper_Fan99", "PodRacer", "BlowholeBandit", "EchoLocator", "SquidVicious", "KelpMeImFalling", "TideTurner", "SaltySprocket", "WheelieWhale", "Porpoise_Driven", "BottlenoseBurnout", "Clicky", "FinalLapFinn", "Reef_Raider", "GillsGoneWild", "SplashDamage", "Nitro_Narwhal", "OrcaOverdrive", "SeaLegs42", "BrineTime", "xX_WaveRider_Xx", "Zoom", "CoralRally", "DriftingDorsal", "Sonar_Boom", "PitStopPlankton", "TurboTuna", "Beluga_Blitz", "HullOfFame", "Squeaky_Wheel", "AnchorsAweigh", "ShellShocked", "KrillSeeker", "LoanShark_Racing", "Pectoral_Pete", "Grip_n_Flip", "DeepDiveDave", "NoBrakesJustFins", "Tidal_Wavey", "FlukeyWin", "MantaMomentum", "Seaweed_Speedway", "pod_person", "HammerheadHarry", "OctaneOctopus", "Aquaplaning", "RipCurrentRick", "SlipstreamSeal", "TheLongestDolphinNameEver")

@@ -3,7 +3,8 @@ class_name Main extends Node3D
 
 const MAIN_SCENE_UID := "uid://bcjuf0jo60p2d"
 
-@export var test_racer_names: PackedStringArray
+@export var dummy_names: DummyNameList
+@export var dummy_count:= 5
 
 var cars: Array[Car]
 var track: RaceTrack
@@ -22,7 +23,7 @@ func _ready() -> void:
 		# create() wasn't used, so the scene is being run on its own (F6):
 		# fall back to test racers and the next track from Session.
 		_track_scene = Session.next_track()
-		_entries = _make_test_racers()
+		_entries = _make_dummy_racers()
 		
 	var track_ready := _spawn_track(_track_scene)
 	if not track_ready:
@@ -72,11 +73,14 @@ func _spawn_car(grid_slot: int, racer: RacerEntry) -> void:
 	car.global_transform = track.get_grid_transform(grid_slot)
 
 
-func _make_test_racers() -> Array[RacerEntry]:
+func _make_dummy_racers() -> Array[RacerEntry]:
 	var test_racers: Array[RacerEntry] = []
-	for test_racer in test_racer_names:
-		var dummy_racer = RacerEntry.create_dummy(test_racer)
-		test_racers.append(dummy_racer)
+	var picker = DummyNamePicker.create(dummy_names)
+	for index in dummy_count:
+		var racer_name := picker.next_name()
+		print(racer_name)
+		var dummy = RacerEntry.create_dummy(racer_name)
+		test_racers.append(dummy)
 	if test_racers.is_empty():
 		push_warning("Main: run on its own with no test_racer_names, so no cars will spawn")
 	return test_racers

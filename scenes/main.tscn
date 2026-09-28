@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dl67tmr6reksh" path="res://scenes/main.gd" id="1_jyhfs"]
 [ext_resource type="Texture2D" uid="uid://d2rk3q8bt7jyi" path="res://assets/qwantani_afternoon_puresky_1k.exr" id="1_sugp2"]
+[ext_resource type="Resource" uid="uid://ha862p3pl066" path="res://data/dummy_names.tres" id="2_choun"]
 [ext_resource type="Material" uid="uid://conknjw4u3g8f" path="res://assets/water_material.tres" id="3_jyhfs"]
 [ext_resource type="Script" uid="uid://peef7r1i3vne" path="res://scenes/camera/race_camera.gd" id="4_tbgi4"]
 [ext_resource type="PackedScene" uid="uid://df5n6q21onik2" path="res://scenes/race/race_director.tscn" id="5_tefeu"]
@@ -31,7 +32,8 @@ height = 1.0
 
 [node name="Main" type="Node3D" unique_id=2117764201]
 script = ExtResource("1_jyhfs")
-test_racer_names = PackedStringArray("Cal Halbert", "Rejam", "BobMonkhouse", "SpeedyBrandon", "I Love Crisps")
+dummy_names = ExtResource("2_choun")
+dummy_count = 15
 
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=1659510672]
 transform = Transform3D(0.81915206, 0.4698463, -0.32898995, 0, 0.57357645, 0.81915206, 0.57357645, -0.6710101, 0.46984634, 0, 31.70038, 0)
