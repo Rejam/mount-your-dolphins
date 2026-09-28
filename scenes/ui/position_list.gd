@@ -21,7 +21,7 @@ func _process(_delta: float) -> void:
 
 
 func _get_visible(placings: Array[Standings.Placing]) -> Array[Standings.Placing]:
-	var racing = placings.filter(_is_racing)
+	var racing := placings.filter(_is_racing)
 	return racing.slice(0, visible_row_count)
 
 

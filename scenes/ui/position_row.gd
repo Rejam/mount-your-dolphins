@@ -9,6 +9,6 @@ static func create() -> PositionRow:
 	var row = load(POSITION_ROW_UID).instantiate() as PositionRow
 	return row
 
-func show_placing(placing: Standings.Placing):
+func show_placing(placing: Standings.Placing) -> void:
 	name_label.text = placing.car.racer.display_name
 	position_label.text = "{position}".format({ "position": placing.position })
