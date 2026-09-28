@@ -17,6 +17,9 @@ class Placing:
 ## physics frame once start_ranking() is called.
 var order: Array[Placing]
 
+var still_racing_order: Array[Placing]:
+	get: return _get_racing()
+
 
 func _enter_tree() -> void:
 	add_to_group(GROUP)
@@ -107,3 +110,11 @@ func _is_tied(a: Placing, b: Placing) -> bool:
 	if not a.has_finished:
 		return false
 	return a.finish_time == b.finish_time
+
+
+func _get_racing() -> Array[Placing]:
+	return order.filter(_is_racing)
+
+
+func _is_racing(place: Placing) -> bool:
+	return not place.has_finished

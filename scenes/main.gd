@@ -32,7 +32,6 @@ func _ready() -> void:
 		_spawn_car(grid_slot, _entries[grid_slot])
 	race_camera.set_targets(cars)
 	race_director.start_race(cars)
-	race_director.race_time = 100
 
 
 static func create(entries: Array[RacerEntry], track_scene: PackedScene) -> Main:

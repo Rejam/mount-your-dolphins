@@ -3,7 +3,7 @@ class_name LapIndicator extends Label
 @export var camera: RaceCamera
 
 func _process(_delta: float) -> void:
-	var target = camera.current_target() as Car
+	var target := camera.current_target as Car
 	var has_target := target != null
 	visible = has_target
 	if has_target:
