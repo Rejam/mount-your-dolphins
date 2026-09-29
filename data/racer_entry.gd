@@ -10,9 +10,9 @@ static func create(racer_id: String, racer_name: String) -> RacerEntry:
 	return racer
 
 
-static var dummy_counter := 0
+static var _dummy_counter := 0
 
 static func create_dummy(dummy_name: String) -> RacerEntry:
-	dummy_counter += 1
-	var dummy_id := "{0}_{1}".format([dummy_name.to_snake_case(), dummy_counter])
+	_dummy_counter += 1
+	var dummy_id := "{0}_{1}".format([dummy_name.to_snake_case(), _dummy_counter])
 	return create(dummy_id, dummy_name)

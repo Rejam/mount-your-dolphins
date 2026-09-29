@@ -82,7 +82,7 @@ func _make_dummy_racers() -> Array[RacerEntry]:
 		var dummy = RacerEntry.create_dummy(racer_name)
 		test_racers.append(dummy)
 	if test_racers.is_empty():
-		push_warning("Main: run on its own with no test_racer_names, so no cars will spawn")
+		push_warning("Main: no dummy racers were created")
 	return test_racers
 	
 

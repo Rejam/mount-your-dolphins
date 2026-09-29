@@ -6,7 +6,11 @@ var loop := 0
 
 static func create(name_list: DummyNameList) -> DummyNamePicker:
 	var picker := DummyNamePicker.new()
-	var list : Array[String]= []
+	if name_list == null:
+		push_error("DummyNamePicker: name_list not provided")
+		picker._unused = []
+		return picker
+	var list: Array[String] = []
 	list.assign(name_list.names)
 	list.shuffle()
 	picker._unused = list
@@ -16,6 +20,7 @@ static func create(name_list: DummyNameList) -> DummyNamePicker:
 func next_name() -> String:
 	if _unused.is_empty() and _used.is_empty():
 		push_error("DummyNamePicker: No names available")
+		return "no_dummy_names_available"
 
 	# reset lists and increment loop
 	if _unused.is_empty():
