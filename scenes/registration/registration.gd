@@ -23,6 +23,7 @@ func _ready() -> void:
 	_name_picker = DummyNamePicker.create(dummy_names)
 	add_dummy_button.pressed.connect(_on_add_dummy_button_pressed)
 	race_button.pressed.connect(_on_race_button_pressed)
+	Twitch.mount_requested.connect(_on_mount_requested)
 	_refresh()
 
 
@@ -64,3 +65,10 @@ func _add_entry_to_entrant_list(entrant_name: String) -> void:
 
 func _set_entrant_count_label(count: int) -> void:
 	count_label.text = "{count}/{max}".format({ "count": count, "max": max_racers })
+
+
+func _on_mount_requested(entry: RacerEntry) -> void:
+	for racer in _entries:
+		if racer.user_id == entry.user_id:
+			return
+	_add_entry(entry)

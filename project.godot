@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Mount Your Dolphins"
-run/main_scene="uid://c7de3ak43n20s"
+run/main_scene="uid://c1xgn7nye0xdk"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="uid://mj4ixlrisqqy"
 
@@ -19,6 +19,7 @@ config/icon="uid://mj4ixlrisqqy"
 
 Session="*uid://4ajvsc2u3fbx"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
+Twitch="*uid://55icjsj1ma4u"
 
 [display]
 
