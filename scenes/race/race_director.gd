@@ -1,5 +1,7 @@
 class_name RaceDirector extends Node
 
+signal race_ended(results: Array[RaceResult])
+
 enum Phase { NOT_STARTED, GRID_HOLD, COUNTDOWN, RACING, FINISHED }
 
 @export var standings: Standings
@@ -121,7 +123,7 @@ func _end_race() -> void:
 	finish_limit_timer.stop()
 	print("Race finished")
 	var results := _build_race_results()
-	_print_results(results)
+	race_ended.emit(results)
 
 
 func _build_race_results() -> Array[RaceResult]:
@@ -146,13 +148,3 @@ func _build_race_results() -> Array[RaceResult]:
 ## Placeholder until the countdown UI exists.
 func _show_countdown(count: int) -> void:
 	print(count)
-
-
-func _print_results(results: Array[RaceResult]) -> void:
-	for result in results:
-		print("{position}: {name} *{finished}*: {time}".format({
-			"position": result.position,
-			"name": result.entry.display_name,
-			"finished": result.finished,
-			"time": result.finish_time,
-		}))

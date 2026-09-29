@@ -17,6 +17,13 @@ var _track_scene: PackedScene
 @onready var race_director: RaceDirector = %RaceDirector
 
 
+static func create(entries: Array[RacerEntry], track_scene: PackedScene) -> Main:
+	var main: Main = load(MAIN_SCENE_UID).instantiate()
+	main._entries = entries
+	main._track_scene = track_scene
+	return main
+
+
 func _ready() -> void:
 	var was_run_standalone := _track_scene == null
 	if was_run_standalone:
@@ -33,13 +40,7 @@ func _ready() -> void:
 		_spawn_car(grid_slot, _entries[grid_slot])
 	race_camera.set_targets(cars)
 	race_director.start_race(cars)
-
-
-static func create(entries: Array[RacerEntry], track_scene: PackedScene) -> Main:
-	var main: Main = load(MAIN_SCENE_UID).instantiate()
-	main._entries = entries
-	main._track_scene = track_scene
-	return main
+	race_director.race_ended.connect(_on_race_ended)
 
 
 ## Builds the track with a random direction. Returns false if no scene or the scene isn't a RaceTrack.
@@ -94,3 +95,7 @@ func _can_race(car: Car) -> bool:
 		))
 		return false
 	return true
+
+
+func _on_race_ended(results: Array[RaceResult]) -> void:
+	get_tree().change_scene_to_node(Results.create(results))

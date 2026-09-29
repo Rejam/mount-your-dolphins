@@ -1,9 +1,9 @@
 class_name PositionRow extends HBoxContainer
 
+const POSITION_ROW_UID = "uid://dw3omxxjpgxsy"
+
 @onready var position_label: Label = %PositionLabel
 @onready var name_label: Label = %NameLabel
-
-const POSITION_ROW_UID = "uid://dw3omxxjpgxsy"
 
 static func create() -> PositionRow:
 	var row = load(POSITION_ROW_UID).instantiate() as PositionRow

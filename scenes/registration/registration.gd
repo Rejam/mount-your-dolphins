@@ -1,5 +1,7 @@
 class_name Registration extends Control
 
+const REGISTRATION_SCENE_UID = "uid://c7de3ak43n20s"
+
 @export var dummy_names: DummyNameList
 @export_range(1, 5) var min_racers := 2
 @export_range(1, 200) var max_racers := 30
@@ -12,10 +14,15 @@ class_name Registration extends Control
 var _entries: Array[RacerEntry]
 var _name_picker: DummyNamePicker
 
+static func create() -> Registration:
+	var reg_scene: Registration = load(REGISTRATION_SCENE_UID).instantiate()
+	return reg_scene
+
+
 func _ready() -> void:
 	_name_picker = DummyNamePicker.create(dummy_names)
-	add_dummy_button.pressed.connect(_on_add_dummy_button)
-	race_button.pressed.connect(_on_race_button)
+	add_dummy_button.pressed.connect(_on_add_dummy_button_pressed)
+	race_button.pressed.connect(_on_race_button_pressed)
 	_refresh()
 
 
@@ -27,12 +34,12 @@ func _add_entry(entry: RacerEntry) -> void:
 	_refresh()
 
 
-func _on_add_dummy_button() -> void:
+func _on_add_dummy_button_pressed() -> void:
 	var entry := RacerEntry.create_dummy(_name_picker.next_name())
 	_add_entry(entry)
 
 
-func _on_race_button() -> void:
+func _on_race_button_pressed() -> void:
 	race_button.disabled = true
 	_entries.shuffle()
 	var track := Session.next_track()
