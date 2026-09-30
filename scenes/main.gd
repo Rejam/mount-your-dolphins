@@ -28,8 +28,8 @@ func _ready() -> void:
 	var was_run_standalone := _track_scene == null
 	if was_run_standalone:
 		# create() wasn't used, so the scene is being run on its own (F6):
-		# fall back to test racers and the next track from Session.
-		_track_scene = Session.next_track()
+		# fall back to test racers and the next track from MYDSession.
+		_track_scene = MYDSession.next_track()
 		_entries = _make_dummy_racers()
 		
 	var track_ready := _spawn_track(_track_scene)

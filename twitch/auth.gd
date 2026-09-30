@@ -1,12 +1,25 @@
 class_name TwitchAuth extends Node
-## OAuth login flow ONLY: opens the browser, runs the local redirect
-## server, captures the access token, fetches the user's id/login, then
-## announces the result and goes quiet.
+## Gets a valid access token and the user's id/login, then announces the
+## result and goes quiet. Two ways in, one way out (login_completed):
+## - start_login(): opens the browser, runs the local redirect server,
+##   captures the token, fetches the user's id/login, saves the token.
+## - try_saved_login(): reuses the token saved by an earlier browser login,
+##   after checking with Twitch that it's still good.
 
 signal login_completed(access_token: String, user_id: String, user_login: String)
 signal login_failed
+## No usable saved token (none saved, expired/revoked, missing a scope, or
+## Twitch unreachable). The caller falls back to start_login().
+signal saved_login_unavailable
 
 const LOGIN_TIMEOUT := 300.0
+const HTTP_OK := 200
+const HTTP_UNAUTHORIZED := 401
+## user:// is per project, so this path never clashes between projects.
+const SAVE_PATH := "user://twitch_token.cfg"
+const SAVE_SECTION := "twitch"
+const SAVE_KEY_TOKEN := "access_token"
+const VALIDATE_URL := "https://id.twitch.tv/oauth2/validate"
 const HELIX_USERS_URL := "https://api.twitch.tv/helix/users"
 const DONE_PAGE := "<html><body>Login complete! You can close this tab.</body></html>"
 ## Twitch returns the token in the URL fragment, which never reaches the
@@ -27,6 +40,8 @@ var _server := TCPServer.new()
 var _pending_client: StreamPeerTCP = null
 var _recv_buffer := PackedByteArray()
 var _access_token: String = ""
+## True while a saved token is being checked with Twitch.
+var is_checking_saved_login: bool = false
 
 @onready var _login_timeout := _make_login_timer()
 
@@ -34,6 +49,10 @@ func _ready() -> void:
 	set_process(false)
 	
 func start_login(client_id: String, redirect_port: int, scopes: Array) -> void:
+	# The saved-token check may still log in; a browser login on top of it
+	# would announce a second login.
+	if is_checking_saved_login:
+		return
 	_client_id = client_id
 	_redirect_port = redirect_port
 
@@ -47,7 +66,10 @@ func start_login(client_id: String, redirect_port: int, scopes: Array) -> void:
 func _authorize_url(scopes: Array) -> String:
 	const BASE := "https://id.twitch.tv/oauth2/authorize"
 	var redirect_uri := "http://localhost:%d/callback" % _redirect_port
-	return "%s?response_type=token&client_id=%s&redirect_uri=%s&scope=%s" % [
+	# force_verify makes Twitch show the account/confirm screen instead of
+	# silently reusing whoever is signed in to twitch.tv in the browser, so
+	# a different account can be picked after forget_saved_login().
+	return "%s?response_type=token&client_id=%s&redirect_uri=%s&scope=%s&force_verify=true" % [
 		BASE, _client_id, redirect_uri.uri_encode(), "+".join(scopes)
 	]
 
@@ -147,6 +169,8 @@ func _on_user_info(code: int, body: PackedByteArray) -> void:
 		return
 
 	_stop_login()
+	# Keep the token so the next launch can skip the browser.
+	_save_token(_access_token)
 	login_completed.emit(_access_token, json["data"][0]["id"], json["data"][0]["login"])
 
 func _fail(reason: String) -> void:
@@ -171,3 +195,88 @@ func _make_login_timer() -> Timer:
 
 func _on_login_timeout() -> void:
 	_fail("login timed out")
+
+# --- SAVED LOGIN ---
+
+## Checks the saved token with Twitch. Emits login_completed if it's still
+## good and covers every scope asked for, otherwise saved_login_unavailable.
+func try_saved_login(client_id: String, scopes: Array) -> void:
+	_client_id = client_id
+	var saved_token := _load_token()
+	if saved_token.is_empty():
+		saved_login_unavailable.emit()
+		return
+
+	is_checking_saved_login = true
+	var http := HTTPRequest.new()
+	add_child(http)
+	http.request_completed.connect(func(result, code, _headers, body):
+		http.queue_free()
+		_on_saved_token_checked(saved_token, scopes, result, code, body)
+	)
+	var headers := PackedStringArray(["Authorization: OAuth %s" % saved_token])
+	var error := http.request(VALIDATE_URL, headers)
+	if error != OK:
+		http.queue_free()
+		is_checking_saved_login = false
+		saved_login_unavailable.emit()
+
+func _on_saved_token_checked(token: String, scopes: Array, result: int, code: int, body: PackedByteArray) -> void:
+	is_checking_saved_login = false
+
+	# Offline or Twitch down: says nothing about the token, so keep it.
+	var reached_twitch := result == HTTPRequest.RESULT_SUCCESS
+	if not reached_twitch:
+		saved_login_unavailable.emit()
+		return
+
+	# Expired or revoked: it will never work again.
+	if code == HTTP_UNAUTHORIZED:
+		_clear_token()
+		saved_login_unavailable.emit()
+		return
+
+	var json = JSON.parse_string(body.get_string_from_utf8())
+	var response_readable: bool = code == HTTP_OK and json is Dictionary \
+			and json.has("user_id") and json.has("login")
+	if not response_readable:
+		push_warning("TwitchAuth: saved token check returned code %d" % code)
+		saved_login_unavailable.emit()
+		return
+
+	# A token saved before a scope was added won't cover it. Drop it so the
+	# browser login grants the new scope.
+	var granted_scopes: Array = json.get("scopes", [])
+	for scope in scopes:
+		if not granted_scopes.has(scope):
+			_clear_token()
+			saved_login_unavailable.emit()
+			return
+
+	_access_token = token
+	login_completed.emit(token, json["user_id"], json["login"])
+
+## Deletes the saved token, so the next launch asks for a browser login.
+## Doesn't touch a login already in use this session.
+func forget_saved_login() -> void:
+	_clear_token()
+
+func _save_token(token: String) -> void:
+	var file := ConfigFile.new()
+	file.set_value(SAVE_SECTION, SAVE_KEY_TOKEN, token)
+	var error := file.save(SAVE_PATH)
+	if error != OK:
+		push_error("TwitchAuth: could not save token (error %d)" % error)
+
+## Returns an empty string when nothing is saved.
+func _load_token() -> String:
+	var file := ConfigFile.new()
+	var error := file.load(SAVE_PATH)
+	if error != OK:
+		return ""
+	var saved_token: String = file.get_value(SAVE_SECTION, SAVE_KEY_TOKEN, "")
+	return saved_token
+
+func _clear_token() -> void:
+	if FileAccess.file_exists(SAVE_PATH):
+		DirAccess.remove_absolute(SAVE_PATH)

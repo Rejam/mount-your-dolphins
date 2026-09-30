@@ -43,6 +43,8 @@ func _ready() -> void:
 	#add_child(_eventsub)
 	#_eventsub.redemption_received.connect(_on_redemption)
 
+	_auth.try_saved_login(CLIENT_ID, SCOPES)
+
 ## Login happens on the title screen, so anything in game.tscn is created after
 ## chat has already connected and has missed the emit. Read the state instead of
 ## assuming DISCONNECTED.
@@ -56,6 +58,11 @@ func retry_chat() -> void:
 func start_login() -> void:
 	_auth.start_login(CLIENT_ID, REDIRECT_PORT, SCOPES)
 
+## Takes effect next launch (chat stays connected until then).
+func forget_login() -> void:
+	_auth.forget_saved_login()
+
+## Same for a browser login and a saved login.
 func _on_login_completed(token: String, id: String, login: String) -> void:
 	access_token = token
 	user_id = id

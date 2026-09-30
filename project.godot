@@ -17,7 +17,7 @@ config/icon="uid://mj4ixlrisqqy"
 
 [autoload]
 
-Session="*uid://4ajvsc2u3fbx"
+MYDSession="*uid://4ajvsc2u3fbx"
 _mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 Twitch="*uid://55icjsj1ma4u"
 

@@ -43,7 +43,7 @@ func _on_add_dummy_button_pressed() -> void:
 func _on_race_button_pressed() -> void:
 	race_button.disabled = true
 	_entries.shuffle()
-	var track := Session.next_track()
+	var track := MYDSession.next_track()
 	var race_scene := Main.create(_entries, track)
 	get_tree().change_scene_to_node(race_scene)
 
