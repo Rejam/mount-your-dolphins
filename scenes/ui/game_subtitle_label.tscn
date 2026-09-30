@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://vbd2e7ag1ll0"]
 
+[ext_resource type="FontFile" uid="uid://cvekbclodnepd" path="res://assets/fonts/BarberChop.otf" id="1_nt8gk"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_3issq"]
+font = ExtResource("1_nt8gk")
 font_size = 32
 
 [node name="RegisterTitle" type="Label" unique_id=1051985318]

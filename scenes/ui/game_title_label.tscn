@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://xayga3sjkowu"]
 
+[ext_resource type="FontFile" uid="uid://cvekbclodnepd" path="res://assets/fonts/BarberChop.otf" id="1_pb6mj"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_nwiag"]
+font = ExtResource("1_pb6mj")
 font_size = 40
 
 [node name="GameSubtitle" type="Label" unique_id=501566893]

@@ -14,7 +14,6 @@ point_count = 8
 
 [node name="Track02" type="Node3D" unique_id=1427628621 node_paths=PackedStringArray("start_line")]
 script = ExtResource("1_qh3rt")
-lap_count = 1
 start_line = NodePath("Route/StartLine")
 
 [node name="Route" type="Path3D" parent="." unique_id=556389993]
