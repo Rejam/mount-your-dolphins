@@ -1,20 +1,17 @@
 class_name TwitchAuth extends Node
 ## Gets a valid access token and the user's id/login, then announces the
-## result and goes quiet. Two ways in, one way out (login_completed):
-## - start_login(): opens the browser, runs the local redirect server,
-##   captures the token, fetches the user's id/login, saves the token.
-## - try_saved_login(): reuses the token saved by an earlier browser login,
-##   after checking with Twitch that it's still good.
+## result and goes quiet. Nothing happens until start_login() is called:
+## - a saved token (from an earlier browser login) is checked with Twitch
+##   and used if still good.
+## - otherwise the browser login runs: local redirect server, capture the
+##   token, fetch the user's id/login, save the token.
 
 signal login_completed(access_token: String, user_id: String, user_login: String)
 signal login_failed
-## No usable saved token (none saved, expired/revoked, missing a scope, or
-## Twitch unreachable). The caller falls back to start_login().
-signal saved_login_unavailable
 
 const LOGIN_TIMEOUT := 300.0
+const HTTP_TIMEOUT := 10.0
 const HTTP_OK := 200
-const HTTP_UNAUTHORIZED := 401
 ## user:// is per project, so this path never clashes between projects.
 const SAVE_PATH := "user://twitch_token.cfg"
 const SAVE_SECTION := "twitch"
@@ -35,13 +32,12 @@ if (t) {
 
 var _client_id: String = ""
 var _redirect_port: int = 0
+var _scopes: Array = []
 
 var _server := TCPServer.new()
 var _pending_client: StreamPeerTCP = null
 var _recv_buffer := PackedByteArray()
 var _access_token: String = ""
-## True while a saved token is being checked with Twitch.
-var is_checking_saved_login: bool = false
 
 @onready var _login_timeout := _make_login_timer()
 
@@ -49,28 +45,32 @@ func _ready() -> void:
 	set_process(false)
 	
 func start_login(client_id: String, redirect_port: int, scopes: Array) -> void:
-	# The saved-token check may still log in; a browser login on top of it
-	# would announce a second login.
-	if is_checking_saved_login:
-		return
 	_client_id = client_id
 	_redirect_port = redirect_port
+	_scopes = scopes
 
+	var saved_token := _load_token()
+	if saved_token.is_empty():
+		_start_browser_login()
+	else:
+		_validate_saved_token(saved_token)
+
+func _start_browser_login() -> void:
 	if _server.listen(_redirect_port, "127.0.0.1") != OK:
-		push_error("TwitchAuth: could not listen on port %d (already in use?)" % _redirect_port)
+		_fail("could not listen on port %d (already in use?)" % _redirect_port)
 		return
 	set_process(true)
-	OS.shell_open(_authorize_url(scopes))
+	OS.shell_open(_authorize_url())
 	_login_timeout.start()
 
-func _authorize_url(scopes: Array) -> String:
+func _authorize_url() -> String:
 	const BASE := "https://id.twitch.tv/oauth2/authorize"
 	var redirect_uri := "http://localhost:%d/callback" % _redirect_port
 	# force_verify makes Twitch show the account/confirm screen instead of
 	# silently reusing whoever is signed in to twitch.tv in the browser, so
-	# a different account can be picked after forget_saved_login().
+	# a different account can be picked after clear_saved_login().
 	return "%s?response_type=token&client_id=%s&redirect_uri=%s&scope=%s&force_verify=true" % [
-		BASE, _client_id, redirect_uri.uri_encode(), "+".join(scopes)
+		BASE, _client_id, redirect_uri.uri_encode(), "+".join(_scopes)
 	]
 
 func _process(_delta: float) -> void:
@@ -148,6 +148,7 @@ func _respond_and_close(html: String) -> void:
 
 func _fetch_user_info() -> void:
 	var http := HTTPRequest.new()
+	http.timeout = HTTP_TIMEOUT
 	add_child(http)
 	http.request_completed.connect(func(_result, code, _headers, body):
 			http.queue_free()
@@ -159,7 +160,7 @@ func _fetch_user_info() -> void:
 	])
 
 func _on_user_info(code: int, body: PackedByteArray) -> void:
-	if code != 200:
+	if code != HTTP_OK:
 		_fail("user info request failed with code %d" % code)
 		return
 
@@ -198,67 +199,44 @@ func _on_login_timeout() -> void:
 
 # --- SAVED LOGIN ---
 
-## Checks the saved token with Twitch. Emits login_completed if it's still
-## good and covers every scope asked for, otherwise saved_login_unavailable.
-func try_saved_login(client_id: String, scopes: Array) -> void:
-	_client_id = client_id
-	var saved_token := _load_token()
-	if saved_token.is_empty():
-		saved_login_unavailable.emit()
-		return
-
-	is_checking_saved_login = true
+## Checks the saved token with Twitch. Any failure (unreachable, expired,
+## revoked, missing a scope) falls back to the browser; the browser login
+## overwrites the saved token, so a bad one never needs clearing here.
+func _validate_saved_token(token: String) -> void:
 	var http := HTTPRequest.new()
+	http.timeout = HTTP_TIMEOUT
 	add_child(http)
 	http.request_completed.connect(func(result, code, _headers, body):
 		http.queue_free()
-		_on_saved_token_checked(saved_token, scopes, result, code, body)
+		_on_saved_token_checked(token, result, code, body)
 	)
-	var headers := PackedStringArray(["Authorization: OAuth %s" % saved_token])
-	var error := http.request(VALIDATE_URL, headers)
-	if error != OK:
+	var headers := PackedStringArray(["Authorization: OAuth %s" % token])
+	if http.request(VALIDATE_URL, headers) != OK:
 		http.queue_free()
-		is_checking_saved_login = false
-		saved_login_unavailable.emit()
+		_start_browser_login()
 
-func _on_saved_token_checked(token: String, scopes: Array, result: int, code: int, body: PackedByteArray) -> void:
-	is_checking_saved_login = false
-
-	# Offline or Twitch down: says nothing about the token, so keep it.
-	var reached_twitch := result == HTTPRequest.RESULT_SUCCESS
-	if not reached_twitch:
-		saved_login_unavailable.emit()
-		return
-
-	# Expired or revoked: it will never work again.
-	if code == HTTP_UNAUTHORIZED:
-		_clear_token()
-		saved_login_unavailable.emit()
+func _on_saved_token_checked(token: String, result: int, code: int, body: PackedByteArray) -> void:
+	if result != HTTPRequest.RESULT_SUCCESS or code != HTTP_OK:
+		_start_browser_login()
 		return
 
 	var json = JSON.parse_string(body.get_string_from_utf8())
-	var response_readable: bool = code == HTTP_OK and json is Dictionary \
-			and json.has("user_id") and json.has("login")
-	if not response_readable:
-		push_warning("TwitchAuth: saved token check returned code %d" % code)
-		saved_login_unavailable.emit()
+	if not (json is Dictionary and json.has("user_id") and json.has("login")):
+		_start_browser_login()
 		return
 
-	# A token saved before a scope was added won't cover it. Drop it so the
-	# browser login grants the new scope.
+	# A token saved before a scope was added won't cover it.
 	var granted_scopes: Array = json.get("scopes", [])
-	for scope in scopes:
+	for scope in _scopes:
 		if not granted_scopes.has(scope):
-			_clear_token()
-			saved_login_unavailable.emit()
+			_start_browser_login()
 			return
 
 	_access_token = token
 	login_completed.emit(token, json["user_id"], json["login"])
 
-## Deletes the saved token, so the next launch asks for a browser login.
-## Doesn't touch a login already in use this session.
-func forget_saved_login() -> void:
+## Deletes the saved token, so the next Connect asks for a browser login.
+func clear_saved_login() -> void:
 	_clear_token()
 
 func _save_token(token: String) -> void:

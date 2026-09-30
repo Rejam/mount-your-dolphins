@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://gwfugdkhvfu7" path="res://scenes/results/results.gd" id="1_wg6ql"]
 [ext_resource type="Resource" uid="uid://ha862p3pl066" path="res://data/dummy_names.tres" id="2_wvvwj"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_hiwug"]
-font_size = 40
+[ext_resource type="PackedScene" uid="uid://bhqi5hdr2opg4" path="res://twitch/twitch_chat_status/twitch_chat_status.tscn" id="3_gxan6"]
+[ext_resource type="PackedScene" uid="uid://xayga3sjkowu" path="res://scenes/ui/game_title_label.tscn" id="3_hmnnc"]
+[ext_resource type="PackedScene" uid="uid://vbd2e7ag1ll0" path="res://scenes/ui/game_subtitle_label.tscn" id="4_gxan6"]
 
 [node name="Results" type="Control" unique_id=1010835937]
 layout_mode = 3
@@ -17,50 +17,58 @@ script = ExtResource("1_wg6ql")
 dummy_names = ExtResource("2_wvvwj")
 dummy_count = 90
 
-[node name="ResultsTitle" type="Label" parent="." unique_id=1670007002]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=2039949535]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 23.0
-grow_horizontal = 2
-text = "Results"
-label_settings = SubResource("LabelSettings_hiwug")
-
-[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1148647466]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
+anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -188.0
-offset_bottom = 112.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
-[node name="ResultsList" type="VFlowContainer" parent="ScrollContainer" unique_id=570894541]
+[node name="VLayout" type="VBoxContainer" parent="MarginContainer" unique_id=631562492]
+layout_mode = 2
+
+[node name="TwitchChatStatus" parent="MarginContainer/VLayout" unique_id=2118529810 instance=ExtResource("3_gxan6")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Titles" type="VBoxContainer" parent="MarginContainer/VLayout" unique_id=1250372492]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="GameTitle" parent="MarginContainer/VLayout/Titles" unique_id=501566893 instance=ExtResource("3_hmnnc")]
+layout_mode = 2
+
+[node name="RegisterTitle" parent="MarginContainer/VLayout/Titles" unique_id=1051985318 instance=ExtResource("4_gxan6")]
+layout_mode = 2
+text = "Results"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VLayout" unique_id=1942275984]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VLayout/VBoxContainer" unique_id=1148647466]
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="ResultsList" type="VFlowContainer" parent="MarginContainer/VLayout/VBoxContainer/ScrollContainer" unique_id=570894541]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/h_separation = 20
 
-[node name="NewRaceButton" type="Button" parent="." unique_id=1299595445]
+[node name="NewRaceButton" type="Button" parent="MarginContainer/VLayout" unique_id=1299595445]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -191.0
-offset_top = -170.0
-offset_right = -38.0
-offset_bottom = -38.0
-grow_horizontal = 0
-grow_vertical = 0
+layout_mode = 2
+size_flags_horizontal = 4
 text = "New Race"
 icon_alignment = 1
 expand_icon = true

@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://vbd2e7ag1ll0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3issq"]
+font_size = 32
+
+[node name="RegisterTitle" type="Label" unique_id=1051985318]
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Join with !mount"
+label_settings = SubResource("LabelSettings_3issq")

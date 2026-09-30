@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://xayga3sjkowu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_nwiag"]
+font_size = 40
+
+[node name="GameSubtitle" type="Label" unique_id=501566893]
+size_flags_horizontal = 4
+size_flags_vertical = 0
+text = "Mount Your Dolphins!"
+label_settings = SubResource("LabelSettings_nwiag")

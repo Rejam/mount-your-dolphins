@@ -12,7 +12,7 @@ const SCOPES := [
 # --- PUBLIC SIGNALS (the game listens to these) ---
 signal login_completed(user_login: String)
 signal login_failed
-signal mount_requested(entry: RacerEntry)
+signal entry_received(player: TwitchPlayer)
 signal chat_state_changed(state: TwitchChat.ChatState)
 #signal reward_redeemed(user: String, reward_title: String, user_input: String)
 
@@ -43,7 +43,6 @@ func _ready() -> void:
 	#add_child(_eventsub)
 	#_eventsub.redemption_received.connect(_on_redemption)
 
-	_auth.try_saved_login(CLIENT_ID, SCOPES)
 
 ## Login happens on the title screen, so anything in game.tscn is created after
 ## chat has already connected and has missed the emit. Read the state instead of
@@ -51,16 +50,26 @@ func _ready() -> void:
 func chat_state() -> TwitchChat.ChatState:
 	return _chat.chat_state
 
+
 ## Manual reconnect, for the connection indicator's click handler.
 func retry_chat() -> void:
 	_chat.retry()
 
+
 func start_login() -> void:
 	_auth.start_login(CLIENT_ID, REDIRECT_PORT, SCOPES)
 
-## Takes effect next launch (chat stays connected until then).
-func forget_login() -> void:
-	_auth.forget_saved_login()
+
+## Logs out: stops chat and deletes the saved token, so the next
+## start_login() opens the browser.
+func disconnect_account() -> void:
+	_chat.disconnect_from_chat()
+	_auth.clear_saved_login()
+	access_token = ""
+	user_id = ""
+	user_login = ""
+	is_logged_in = false
+
 
 ## Same for a browser login and a saved login.
 func _on_login_completed(token: String, id: String, login: String) -> void:
@@ -73,7 +82,8 @@ func _on_login_completed(token: String, id: String, login: String) -> void:
 	#_eventsub.init(token, id, CLIENT_ID)
 	login_completed.emit(login)
 
-func _on_chat_message(player: Player, message: String) -> void:
+
+func _on_chat_message(player: TwitchPlayer, message: String) -> void:
 	var parts := message.strip_edges().split(" ", false)
 	if parts.is_empty():
 		return
@@ -81,9 +91,9 @@ func _on_chat_message(player: Player, message: String) -> void:
 	if command.to_lower() == "!mount":
 		submit_entry(player)
 
-func submit_entry(player: Player) -> void:
-	var entry := RacerEntry.create(player.user_id, player.display_name)
-	mount_requested.emit(entry)
+
+func submit_entry(player: TwitchPlayer) -> void:
+	entry_received.emit(player)
 	
 #func _on_redemption(user: String, reward_title: String, user_input: String) -> void:
 	#reward_redeemed.emit(user, reward_title, user_input)

@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" uid="uid://dttlno6q8nod5" path="res://scenes/registration/registration.gd" id="1_aick3"]
 [ext_resource type="Resource" uid="uid://ha862p3pl066" path="res://data/dummy_names.tres" id="2_4yd4u"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_hiwug"]
-font_size = 40
+[ext_resource type="PackedScene" uid="uid://bhqi5hdr2opg4" path="res://twitch/twitch_chat_status/twitch_chat_status.tscn" id="3_8yy2o"]
+[ext_resource type="PackedScene" uid="uid://xayga3sjkowu" path="res://scenes/ui/game_title_label.tscn" id="3_aasc2"]
+[ext_resource type="PackedScene" uid="uid://vbd2e7ag1ll0" path="res://scenes/ui/game_subtitle_label.tscn" id="4_uej26"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4yd4u"]
 font_size = 28
@@ -22,31 +22,52 @@ grow_vertical = 2
 script = ExtResource("1_aick3")
 dummy_names = ExtResource("2_4yd4u")
 
-[node name="RegisterTitle" type="Label" parent="." unique_id=1670007002]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1923230667]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_right = 20.0
-offset_bottom = 23.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
-text = "Register"
-label_settings = SubResource("LabelSettings_hiwug")
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
 
-[node name="EntrantsHeader" type="HBoxContainer" parent="." unique_id=1955156500]
-layout_mode = 1
-offset_top = 75.0
-offset_right = 400.0
-offset_bottom = 114.0
+[node name="VLayout" type="VBoxContainer" parent="MarginContainer" unique_id=460017484]
+layout_mode = 2
+
+[node name="TwitchChatStatus" parent="MarginContainer/VLayout" unique_id=2118529810 instance=ExtResource("3_8yy2o")]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+
+[node name="Titles" type="VBoxContainer" parent="MarginContainer/VLayout" unique_id=441255602]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="GameTitle" parent="MarginContainer/VLayout/Titles" unique_id=501566893 instance=ExtResource("3_aasc2")]
+layout_mode = 2
+
+[node name="GameSubtitle" parent="MarginContainer/VLayout/Titles" unique_id=1051985318 instance=ExtResource("4_uej26")]
+layout_mode = 2
+
+[node name="Entrants" type="VBoxContainer" parent="MarginContainer/VLayout" unique_id=840312462]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="EntrantsHeader" type="HBoxContainer" parent="MarginContainer/VLayout/Entrants" unique_id=1955156500]
+layout_mode = 2
+size_flags_vertical = 4
 theme_override_constants/separation = 12
 
-[node name="EntrantsTitle" type="Label" parent="EntrantsHeader" unique_id=886612184]
+[node name="EntrantsTitle" type="Label" parent="MarginContainer/VLayout/Entrants/EntrantsHeader" unique_id=886612184]
 layout_mode = 2
-text = "Entrants"
+text = "Mounters"
 label_settings = SubResource("LabelSettings_4yd4u")
 
-[node name="CountLabel" type="Label" parent="EntrantsHeader" unique_id=746900973]
+[node name="CountLabel" type="Label" parent="MarginContainer/VLayout/Entrants/EntrantsHeader" unique_id=746900973]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 8
@@ -55,50 +76,30 @@ offset_transform_position = Vector2(0, -2)
 text = "0/0"
 label_settings = SubResource("LabelSettings_5lgib")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="." unique_id=1148647466]
-layout_mode = 1
-anchors_preset = 14
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_top = -188.0
-offset_bottom = 112.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VLayout/Entrants" unique_id=1148647466]
+custom_minimum_size = Vector2(0, 320)
+layout_mode = 2
+size_flags_vertical = 3
 
-[node name="EntrantList" type="VFlowContainer" parent="ScrollContainer" unique_id=570894541]
+[node name="EntrantList" type="VFlowContainer" parent="MarginContainer/VLayout/Entrants/ScrollContainer" unique_id=570894541]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme_override_constants/h_separation = 20
 
-[node name="AddDummyButton" type="Button" parent="." unique_id=846393698]
+[node name="RaceButton" type="Button" parent="MarginContainer/VLayout/Entrants" unique_id=1299595445]
 unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 4
-anchor_top = 0.5
-anchor_bottom = 0.5
-offset_top = 140.0
-offset_right = 104.0
-offset_bottom = 171.0
-grow_vertical = 2
-text = "Add Dummy"
-
-[node name="RaceButton" type="Button" parent="." unique_id=1299595445]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -191.0
-offset_top = -170.0
-offset_right = -38.0
-offset_bottom = -38.0
-grow_horizontal = 0
-grow_vertical = 0
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
 text = "Race"
 icon_alignment = 1
 expand_icon = true
+
+[node name="AddDummyButton" type="Button" parent="MarginContainer/VLayout" unique_id=846393698]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Add Dummy"
