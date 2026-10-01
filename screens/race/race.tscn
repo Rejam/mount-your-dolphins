@@ -6,6 +6,7 @@
 [ext_resource type="Material" uid="uid://conknjw4u3g8f" path="res://assets/water_material.tres" id="4_tfcnk"]
 [ext_resource type="PackedScene" uid="uid://bqgcbauxotu2j" path="res://screens/race/hud/position_list.tscn" id="5_wfqi5"]
 [ext_resource type="Script" uid="uid://druawfu78ucby" path="res://screens/race/hud/lap_indicator.gd" id="6_bqgge"]
+[ext_resource type="PackedScene" uid="uid://cj63lfvp5xaym" path="res://screens/race/hud/race_announcer.tscn" id="7_1vw1j"]
 [ext_resource type="PackedScene" uid="uid://df5n6q21onik2" path="res://screens/race/race_director.tscn" id="7_d6un7"]
 [ext_resource type="Script" uid="uid://3wxtf0vq7vol" path="res://screens/race/standings.gd" id="8_s6b0w"]
 [ext_resource type="Script" uid="uid://dsa3butreh213" path="res://screens/race/camera/camera_director.gd" id="9_1vw1j"]
@@ -64,6 +65,9 @@ offset_bottom = 23.0
 grow_horizontal = 0
 script = ExtResource("6_bqgge")
 camera = NodePath("../../RaceCamera")
+
+[node name="RaceAnnouncer" parent="UI" unique_id=1201999755 node_paths=PackedStringArray("race_director") instance=ExtResource("7_1vw1j")]
+race_director = NodePath("../../RaceDirector")
 
 [node name="RaceDirector" parent="." unique_id=1724295570 node_paths=PackedStringArray("standings") instance=ExtResource("7_d6un7")]
 unique_name_in_owner = true

@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://cj63lfvp5xaym"]
+
+[ext_resource type="Script" uid="uid://d1hs0o57mlkn1" path="res://screens/race/hud/race_announcer.gd" id="1_40fof"]
+[ext_resource type="FontFile" uid="uid://cvekbclodnepd" path="res://assets/fonts/BarberChop.otf" id="2_2x0qk"]
+
+[node name="RaceAnnouncer" type="Control" unique_id=1201999755]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_40fof")
+
+[node name="AnnounceLabel" type="Label" parent="." unique_id=75101691]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -113.25
+offset_top = -46.25
+offset_right = 113.25
+offset_bottom = 46.25
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme_override_fonts/font = ExtResource("2_2x0qk")
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DnfCountdownLabel" type="Label" parent="." unique_id=1119064960]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -77.75
+offset_top = 16.0
+offset_right = 77.75
+offset_bottom = 85.0
+grow_horizontal = 2
+pivot_offset_ratio = Vector2(0.5, 0)
+size_flags_horizontal = 4
+size_flags_vertical = 0
+offset_transform_enabled = true
+theme_override_fonts/font = ExtResource("2_2x0qk")
+theme_override_font_sizes/font_size = 32

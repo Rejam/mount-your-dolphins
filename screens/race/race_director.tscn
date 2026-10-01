@@ -1,21 +1,22 @@
 [gd_scene format=3 uid="uid://df5n6q21onik2"]
 
 [ext_resource type="Script" uid="uid://bq7iqqa5plxuf" path="res://screens/race/race_director.gd" id="1_frf8o"]
+[ext_resource type="Script" uid="uid://d2oi2yn0picts" path="res://shared/countdown_timer.gd" id="2_3ktl0"]
 
 [node name="RaceDirector" type="Node" unique_id=1724295570]
 script = ExtResource("1_frf8o")
 
-[node name="GridHoldTimer" type="Timer" parent="." unique_id=367662188]
+[node name="GridHoldCountdown" type="Node" parent="." unique_id=1957383998]
 unique_name_in_owner = true
-process_callback = 0
-one_shot = true
+script = ExtResource("2_3ktl0")
+start_from = 3
 
-[node name="CountdownTimer" type="Timer" parent="." unique_id=1567087795]
+[node name="RaceCountdown" type="Node" parent="." unique_id=427771927]
 unique_name_in_owner = true
-process_callback = 0
-one_shot = true
+script = ExtResource("2_3ktl0")
+start_from = 3
 
-[node name="FinishLimitTimer" type="Timer" parent="." unique_id=2014560238]
+[node name="FinishCountdown" type="Node" parent="." unique_id=374976639]
 unique_name_in_owner = true
-process_callback = 0
-one_shot = true
+script = ExtResource("2_3ktl0")
+start_from = 30
