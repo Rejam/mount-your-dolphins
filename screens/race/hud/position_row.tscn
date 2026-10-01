@@ -37,4 +37,5 @@ theme_override_constants/outline_size = 2
 [node name="ClickArea" type="Button" parent="." unique_id=1910435393]
 unique_name_in_owner = true
 layout_mode = 2
+focus_mode = 0
 theme_type_variation = &"FlatButton"
