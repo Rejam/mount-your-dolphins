@@ -11,7 +11,7 @@ func _ready() -> void:
 		return
 	var entries = _make_entries()
 	var scene = Race.create(entries, track, direction)
-	get_tree().change_scene_to_node(scene)
+	get_tree().change_scene_to_node.call_deferred(scene)
 
 func _make_entries() -> Array[RacerEntry]:
 	var test_entries: Array[RacerEntry] = []
