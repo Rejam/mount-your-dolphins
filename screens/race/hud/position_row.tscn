@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dw3omxxjpgxsy"]
+
+[ext_resource type="Script" uid="uid://g2oowlyu8lof" path="res://screens/race/hud/position_row.gd" id="1_v4ej1"]
+
+[node name="PositionRow" type="HBoxContainer" unique_id=1246333871]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_v4ej1")
+
+[node name="PositionLabel" type="Label" parent="." unique_id=890173503]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="NameLabel" type="Label" parent="." unique_id=190098986]
+unique_name_in_owner = true
+layout_mode = 2

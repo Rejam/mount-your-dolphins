@@ -1,7 +1,0 @@
-[gd_scene format=3 uid="uid://dqqtn2ljx1oqe"]
-
-[ext_resource type="Script" uid="uid://b04iq477ciry7" path="res://scenes/car/components/position_tag.gd" id="1_7umbk"]
-
-[node name="PositionTag" type="Label3D" unique_id=1839587390]
-billboard = 1
-script = ExtResource("1_7umbk")

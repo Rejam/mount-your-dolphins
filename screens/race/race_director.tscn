@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://df5n6q21onik2"]
+
+[ext_resource type="Script" uid="uid://bq7iqqa5plxuf" path="res://screens/race/race_director.gd" id="1_frf8o"]
+
+[node name="RaceDirector" type="Node" unique_id=1724295570]
+script = ExtResource("1_frf8o")
+
+[node name="GridHoldTimer" type="Timer" parent="." unique_id=367662188]
+unique_name_in_owner = true
+process_callback = 0
+one_shot = true
+
+[node name="CountdownTimer" type="Timer" parent="." unique_id=1567087795]
+unique_name_in_owner = true
+process_callback = 0
+one_shot = true
+
+[node name="FinishLimitTimer" type="Timer" parent="." unique_id=2014560238]
+unique_name_in_owner = true
+process_callback = 0
+one_shot = true

@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bfm263g5w8ee8"]
+
+[ext_resource type="Script" uid="uid://bb871aexa6sbr" path="res://screens/results/result_row.gd" id="1_q2dmp"]
+
+[node name="ResultRow" type="HBoxContainer" unique_id=1246333871]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_q2dmp")
+
+[node name="PositionLabel" type="Label" parent="." unique_id=890173503]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 0)
+layout_mode = 2
+text = "1"
+
+[node name="NameLabel" type="Label" parent="." unique_id=190098986]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(260, 0)
+layout_mode = 2
+text = "John Smith"
+
+[node name="FinishTimeLabel" type="Label" parent="." unique_id=1836744484]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(60, 0)
+layout_mode = 2
+text = "1:45"

@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://bqgcbauxotu2j"]
+
+[ext_resource type="Script" uid="uid://ctgfd2ajriq3a" path="res://screens/race/hud/position_list.gd" id="1_ygyco"]
+
+[node name="PositionList" type="VBoxContainer" unique_id=1547719571]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ygyco")
