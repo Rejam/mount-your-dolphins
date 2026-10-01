@@ -30,6 +30,13 @@ top_radius = 500.0
 bottom_radius = 500.0
 height = 1.0
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tla8h"]
+content_margin_left = 4.0
+content_margin_top = 2.0
+content_margin_right = 4.0
+content_margin_bottom = 2.0
+bg_color = Color(0, 0, 0, 0.39215687)
+
 [node name="Race" type="Node3D" unique_id=2117764201]
 script = ExtResource("1_3wiy6")
 
@@ -64,6 +71,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="PositionList" parent="UI/MarginContainer" unique_id=1547719571 node_paths=PackedStringArray("standings") instance=ExtResource("5_wfqi5")]
+unique_name_in_owner = true
 layout_mode = 2
 standings = NodePath("../../../Standings")
 
@@ -71,6 +79,8 @@ standings = NodePath("../../../Standings")
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
+theme_override_constants/outline_size = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_tla8h")
 script = ExtResource("6_bqgge")
 camera = NodePath("../../../RaceCamera")
 

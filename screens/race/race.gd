@@ -14,6 +14,7 @@ var _track_direction: TrackDirection
 @onready var cars_node: Node3D = %Cars
 @onready var race_camera: RaceCamera = %RaceCamera
 @onready var race_director: RaceDirector = %RaceDirector
+@onready var position_list: PositionList = %PositionList
 
 
 static func create(entries: Array[RacerEntry], track_scene: PackedScene, direction:= TrackDirection.RANDOM) -> Race:
@@ -34,7 +35,7 @@ func _ready() -> void:
 	race_camera.set_targets(cars)
 	race_director.start_race(cars)
 	race_director.race_ended.connect(_on_race_ended)
-
+	position_list.car_clicked.connect(race_camera.select_by_user)
 
 ## Builds the track. Returns false if no scene or the scene isn't a RaceTrack.
 func _spawn_track(track_scene: PackedScene) -> bool:

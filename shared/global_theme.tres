@@ -17,6 +17,5 @@ MarginContainer/constants/margin_left = 16
 MarginContainer/constants/margin_right = 16
 MarginContainer/constants/margin_top = 16
 ScrollContainer/styles/panel = SubResource("StyleBoxFlat_m2k4o")
-VBoxOverlay/base_type = &"VBoxContainer"
 VFlowContainer/constants/h_separation = 20
 VFlowContainer/constants/v_separation = 12

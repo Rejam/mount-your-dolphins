@@ -91,15 +91,15 @@ func cycle(step: int) -> void:
 	var current_index := targets.find(current_target)
 	# target not found so just go to first in targets
 	if current_index == -1:
-		_select_by_user(targets[0])
+		select_by_user(targets[0])
 		return
 	var new_index := current_index + step
 	var wrapped_new_index := wrapi(new_index, 0, targets.size())
 	var new_target := targets[wrapped_new_index]
-	_select_by_user(new_target)
+	select_by_user(new_target)
 
 
-func _select_by_user(target: Node3D) -> void:
+func select_by_user(target: Node3D) -> void:
 	select(target)
 	user_changed_camera_target.emit(target)
 	
