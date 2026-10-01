@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d2rk3q8bt7jyi"
-path.bptc="res://.godot/imported/qwantani_afternoon_puresky_1k.exr-bc7d0759c5c824041fd5eb8b462ea5d1.bptc.ctex"
+path.bptc="res://.godot/imported/sky.exr-ecbbe430568d1d7078d19f44a459937a.bptc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://assets/qwantani_afternoon_puresky_1k.exr"
-dest_files=["res://.godot/imported/qwantani_afternoon_puresky_1k.exr-bc7d0759c5c824041fd5eb8b462ea5d1.bptc.ctex"]
+source_file="res://assets/sky.exr"
+dest_files=["res://.godot/imported/sky.exr-ecbbe430568d1d7078d19f44a459937a.bptc.ctex"]
 
 [params]
 

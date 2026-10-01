@@ -16,7 +16,7 @@ signal user_changed_camera_target(target: Node3D)
 
 @export var distance := 8.0
 @export var min_distance := 3.0
-@export var max_distance := 60.0
+@export var max_distance := 30.0
 ## Degrees above the horizon. 90 = straight down.
 @export_range(5.0, 89.0) var pitch_deg := 55.0
 @export_range(5.0, 89.0) var min_pitch_deg := 10.0

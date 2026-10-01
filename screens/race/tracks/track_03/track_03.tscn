@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://cg2sm8ke26dxu"]
 
 [ext_resource type="Script" uid="uid://cwk6vn803tauw" path="res://screens/race/tracks/race_track.gd" id="1_dy84y"]
+[ext_resource type="PackedScene" uid="uid://dgvy32vnh6ths" path="res://screens/race/props/start_line.tscn" id="2_nv2t4"]
 
 [sub_resource type="Curve3D" id="Curve3D_fhpk0"]
 closed = true
@@ -116,15 +117,17 @@ data = PackedVector3Array(-65.9127, 4.8075, 29.5934, -65.845795, 4.8115, 29.5539
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
 script = ExtResource("1_dy84y")
 lap_count = 2
-start_line = NodePath("Route/StartLine")
+start_line = NodePath("Route/Start")
 
 [node name="Route" type="Path3D" parent="." unique_id=556389993]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.14251, 0, 25.595543)
 curve = SubResource("Curve3D_fhpk0")
 
-[node name="StartLine" type="PathFollow3D" parent="Route" unique_id=1096674937]
+[node name="Start" type="PathFollow3D" parent="Route" unique_id=1096674937]
 transform = Transform3D(-0.060157742, -0.074867874, 0.9953505, -0.041057043, 0.99650466, 0.07247229, -0.99731934, -0.036507517, -0.06302248, 74.28949, 3.668471, 48.27359)
 progress = 850.0
+
+[node name="StartLine" parent="Route/Start" unique_id=558001950 instance=ExtResource("2_nv2t4")]
 
 [node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="." unique_id=582858774]
 mesh = SubResource("ArrayMesh_srbdb")

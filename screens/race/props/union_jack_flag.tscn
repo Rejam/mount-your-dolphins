@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://de2er0csi53cs"]
+
+[ext_resource type="PackedScene" uid="uid://dx0m2k0rjafd1" path="res://assets/race_props/union_jack_flag.glb" id="1_kwx73"]
+[ext_resource type="Shader" uid="uid://du4fwhx34e6c" path="res://screens/race/props/flag_wave.gdshader" id="2_p51qn"]
+[ext_resource type="Texture2D" uid="uid://dd1o0tb08yf8b" path="res://assets/race_props/union_jack_flag_union_jack.png" id="3_7t2au"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p51qn"]
+render_priority = 0
+shader = ExtResource("2_p51qn")
+shader_parameter/flag_texture = ExtResource("3_7t2au")
+shader_parameter/wave_height = 0.7
+shader_parameter/waves_along_flag = 2.0
+shader_parameter/wave_speed = 8.0
+shader_parameter/flag_width = 2.0
+
+[node name="UnionJackFlag" unique_id=1992207753 instance=ExtResource("1_kwx73")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.031024, 0)
+
+[node name="Pole" parent="UnionJackFlag" parent_id_path=PackedInt32Array(208832555) index="0" unique_id=793926276]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, -3.9756653, 0)
+
+[node name="Cloth" parent="UnionJackFlag" parent_id_path=PackedInt32Array(208832555) index="1" unique_id=619077923]
+material_override = SubResource("ShaderMaterial_p51qn")

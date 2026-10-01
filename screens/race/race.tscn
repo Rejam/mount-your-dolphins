@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bcjuf0jo60p2d"]
 
 [ext_resource type="Script" uid="uid://dl67tmr6reksh" path="res://screens/race/race.gd" id="1_3wiy6"]
-[ext_resource type="Texture2D" uid="uid://d2rk3q8bt7jyi" path="res://assets/qwantani_afternoon_puresky_1k.exr" id="2_1vw1j"]
+[ext_resource type="Texture2D" uid="uid://d2rk3q8bt7jyi" path="res://assets/sky.exr" id="2_1vw1j"]
 [ext_resource type="Script" uid="uid://peef7r1i3vne" path="res://screens/race/camera/race_camera.gd" id="3_3wiy6"]
 [ext_resource type="Material" uid="uid://conknjw4u3g8f" path="res://assets/water_material.tres" id="4_tfcnk"]
 [ext_resource type="PackedScene" uid="uid://bqgcbauxotu2j" path="res://screens/race/hud/position_list.tscn" id="5_wfqi5"]

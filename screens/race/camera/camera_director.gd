@@ -6,7 +6,7 @@ enum Mode { AUTO, MANUAL }
 @export var standings: Standings
 
 @export var auto_distance := 12.0
-@export var auto_pitch_deg := 55.0
+@export var auto_pitch_deg := 35.0
 @export var auto_yaw_deg := 160.0
 
 var mode := Mode.AUTO

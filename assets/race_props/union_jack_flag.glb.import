@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://d1yxfdiu3234x"
-path="res://.godot/imported/city_bus_3d.glb-6c5b94247c865ac8e318af64067d1515.scn"
+uid="uid://dx0m2k0rjafd1"
+path="res://.godot/imported/union_jack_flag.glb-ee74b4e7194af87cca1eb38640f5fbd9.scn"
 
 [deps]
 
-source_file="res://assets/city_bus_3d.glb"
-dest_files=["res://.godot/imported/city_bus_3d.glb-6c5b94247c865ac8e318af64067d1515.scn"]
+source_file="res://assets/race_props/union_jack_flag.glb"
+dest_files=["res://.godot/imported/union_jack_flag.glb-ee74b4e7194af87cca1eb38640f5fbd9.scn"]
 
 [params]
 
@@ -25,7 +25,7 @@ nodes/use_name_suffixes=true
 nodes/use_node_type_suffixes=true
 meshes/ensure_tangents=true
 meshes/generate_lods=true
-meshes/create_shadow_meshes=true
+meshes/create_shadow_meshes=false
 meshes/light_baking=1
 meshes/lightmap_texel_size=0.2
 meshes/force_disable_compression=false
@@ -39,7 +39,16 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={}
+_subresources={
+"nodes": {
+"PATH:UnionJackFlag/Cloth": {
+"mesh_instance/cast_shadow": 0
+},
+"PATH:UnionJackFlag/Pole": {
+"mesh_instance/cast_shadow": 0
+}
+}
+}
 gltf/naming_version=2
 gltf/embedded_image_handling=1
 gltf/texture_map_mode=1
