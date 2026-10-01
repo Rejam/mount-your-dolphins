@@ -1,6 +1,6 @@
 class_name Registration extends Control
 
-const REGISTRATION_SCENE_UID = "uid://c7de3ak43n20s"
+const SCENE_UID = "uid://c7de3ak43n20s"
 
 @export var dummy_names: DummyNameList
 @export_range(1, 5) var min_racers := 2
@@ -15,7 +15,7 @@ var _entries: Array[RacerEntry]
 var _name_picker: DummyNamePicker
 
 static func create() -> Registration:
-	var reg_scene: Registration = load(REGISTRATION_SCENE_UID).instantiate()
+	var reg_scene: Registration = load(SCENE_UID).instantiate()
 	return reg_scene
 
 

@@ -1,6 +1,6 @@
 class_name Results extends Control
 
-const RESULTS_SCENE_UID := "uid://cjywgt25sgf82"
+const SCENE_UID := "uid://cjywgt25sgf82"
 
 @export var dummy_names: DummyNameList
 @export var dummy_count:= 5
@@ -11,7 +11,7 @@ const RESULTS_SCENE_UID := "uid://cjywgt25sgf82"
 var _results: Array[RaceResult]
 
 static func create(results: Array[RaceResult]) -> Results:
-	var results_scene: Results = load(RESULTS_SCENE_UID).instantiate()
+	var results_scene: Results = load(SCENE_UID).instantiate()
 	results_scene._results = results
 	return results_scene
 

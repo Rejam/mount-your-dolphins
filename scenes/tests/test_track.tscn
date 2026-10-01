@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://dktnpm176lfj8"]
+
+[ext_resource type="Script" uid="uid://bvijw0l2ifs22" path="res://scenes/tests/test_track.gd" id="1_o3frj"]
+[ext_resource type="PackedScene" uid="uid://cg2sm8ke26dxu" path="res://scenes/tracks/track_03/track_03.tscn" id="2_3omuj"]
+[ext_resource type="Resource" uid="uid://ha862p3pl066" path="res://data/dummy_names.tres" id="3_slu4h"]
+
+[node name="TestTrack" type="Node" unique_id=965096395]
+script = ExtResource("1_o3frj")
+track = ExtResource("2_3omuj")
+dummy_names = ExtResource("3_slu4h")

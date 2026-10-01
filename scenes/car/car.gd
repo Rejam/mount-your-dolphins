@@ -4,7 +4,7 @@ extends VehicleBody3D
 
 ## car.tscn. Loaded rather than preloaded: car.tscn uses this script, so a
 ## preload here would be a cyclic reference.
-const CAR_SCENE_UID := "uid://ch1ph3v6ippq6"
+const SCENE_UID := "uid://ch1ph3v6ippq6"
 ## The car's front is -Z, so engine force is negated to drive forward.
 const DRIVE_SIGN := -1.0
 
@@ -24,7 +24,7 @@ var racer: RacerEntry
 
 ## Makes a new car for a viewer. Add it to the tree, then place it.
 static func create(entry: RacerEntry) -> Car:
-	var car: Car = load(CAR_SCENE_UID).instantiate()
+	var car: Car = load(SCENE_UID).instantiate()
 	car.racer = entry
 	car.name = "Car_%s" % entry.user_id
 	return car

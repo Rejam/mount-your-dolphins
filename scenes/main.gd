@@ -1,37 +1,30 @@
 class_name Main extends Node3D
 ## Runs the race: spawns cars, has them driven round the track
 
-const MAIN_SCENE_UID := "uid://bcjuf0jo60p2d"
-
-@export var dummy_names: DummyNameList
-@export var dummy_count:= 5
+const SCENE_UID := "uid://bcjuf0jo60p2d"
+enum TrackDirection { RANDOM, FORWARD, BACKWARD }
 
 var cars: Array[Car]
 var track: RaceTrack
 
 var _entries: Array[RacerEntry]
 var _track_scene: PackedScene
+var _track_direction: TrackDirection
 
 @onready var cars_node: Node3D = %Cars
 @onready var race_camera: RaceCamera = %RaceCamera
 @onready var race_director: RaceDirector = %RaceDirector
 
 
-static func create(entries: Array[RacerEntry], track_scene: PackedScene) -> Main:
-	var main: Main = load(MAIN_SCENE_UID).instantiate()
-	main._entries = entries
-	main._track_scene = track_scene
-	return main
+static func create(entries: Array[RacerEntry], track_scene: PackedScene, direction:= TrackDirection.RANDOM) -> Main:
+	var scene: Main = load(SCENE_UID).instantiate()
+	scene._entries = entries
+	scene._track_scene = track_scene
+	scene._track_direction = direction
+	return scene
 
 
 func _ready() -> void:
-	var was_run_standalone := _track_scene == null
-	if was_run_standalone:
-		# create() wasn't used, so the scene is being run on its own (F6):
-		# fall back to test racers and the next track from MYDSession.
-		_track_scene = MYDSession.next_track()
-		_entries = _make_dummy_racers()
-		
 	var track_ready := _spawn_track(_track_scene)
 	if not track_ready:
 		return
@@ -43,10 +36,10 @@ func _ready() -> void:
 	race_director.race_ended.connect(_on_race_ended)
 
 
-## Builds the track with a random direction. Returns false if no scene or the scene isn't a RaceTrack.
+## Builds the track. Returns false if no scene or the scene isn't a RaceTrack.
 func _spawn_track(track_scene: PackedScene) -> bool:
 	if not track_scene:
-		push_error("Main: no track scene provided to spawn")
+		push_error("Main: no track scene provided to spawn. Use test track scene")
 		return false
 
 	var track_root := track_scene.instantiate()
@@ -57,8 +50,16 @@ func _spawn_track(track_scene: PackedScene) -> bool:
 		return false
 
 	# Direction must be set before the track enters the tree.
-	var runs_reversed := randi_range(0, 1) == 1
-	track.reversed = runs_reversed
+	var is_track_reverse: bool
+	match _track_direction:
+		TrackDirection.RANDOM:
+			is_track_reverse = randi_range(0, 1) == 1
+		TrackDirection.BACKWARD:
+			is_track_reverse = true
+		TrackDirection.FORWARD:
+			is_track_reverse = false
+	
+	track.reversed = is_track_reverse
 	add_child(track)
 	return true
 
@@ -73,19 +74,6 @@ func _spawn_car(grid_slot: int, racer: RacerEntry) -> void:
 	cars_node.add_child(car)
 	car.global_transform = track.get_grid_transform(grid_slot)
 
-
-func _make_dummy_racers() -> Array[RacerEntry]:
-	var test_racers: Array[RacerEntry] = []
-	var picker = DummyNamePicker.create(dummy_names)
-	for index in dummy_count:
-		var racer_name := picker.next_name()
-		print(racer_name)
-		var dummy = RacerEntry.create_dummy(racer_name)
-		test_racers.append(dummy)
-	if test_racers.is_empty():
-		push_warning("Main: no dummy racers were created")
-	return test_racers
-	
 
 func _can_race(car: Car) -> bool:
 	var progress_component := TrackProgress.find_on(car)
