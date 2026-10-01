@@ -58,7 +58,7 @@ func _refresh() -> void:
 func _add_entry_to_entrant_list(entrant_name: String) -> void:
 	var label := Label.new()
 	label.text = entrant_name
-	label.custom_minimum_size.y = 26
+	#label.custom_minimum_size.y = 26
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	entrant_list.add_child(label)
 

@@ -1,0 +1,22 @@
+[gd_resource type="Theme" format=3 uid="uid://bkucdietxaw62"]
+
+[ext_resource type="FontFile" uid="uid://dvq68nb75porr" path="res://assets/fonts/Roboto-Regular.ttf" id="1_ets1m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m2k4o"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0, 0, 0, 0.078431375)
+corner_detail = 4
+
+[resource]
+Label/fonts/font = ExtResource("1_ets1m")
+MarginContainer/constants/margin_bottom = 16
+MarginContainer/constants/margin_left = 16
+MarginContainer/constants/margin_right = 16
+MarginContainer/constants/margin_top = 16
+ScrollContainer/styles/panel = SubResource("StyleBoxFlat_m2k4o")
+VBoxOverlay/base_type = &"VBoxContainer"
+VFlowContainer/constants/h_separation = 20
+VFlowContainer/constants/v_separation = 12

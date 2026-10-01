@@ -29,10 +29,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
 
 [node name="VLayout" type="VBoxContainer" parent="MarginContainer" unique_id=460017484]
 layout_mode = 2
@@ -86,7 +82,6 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/h_separation = 20
 
 [node name="RaceButton" type="Button" parent="MarginContainer/VLayout/Entrants" unique_id=1299595445]
 unique_name_in_owner = true
