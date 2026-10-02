@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dqqtn2ljx1oqe" path="res://screens/race/car/components/position_tag.tscn" id="3_duf8q"]
 [ext_resource type="PackedScene" uid="uid://b750oy7u5u31r" path="res://screens/race/car/components/stickiness.tscn" id="4_h48xb"]
 [ext_resource type="Script" uid="uid://beq2mqmtdwmcm" path="res://screens/race/car/components/bumper.gd" id="4_x7uf8"]
+[ext_resource type="PackedScene" uid="uid://eg1c0ychhdn8" path="res://screens/race/car/components/upright.tscn" id="5_q13se"]
 [ext_resource type="Script" uid="uid://nw3305dl450h" path="res://screens/race/car/components/track_progress.gd" id="5_tcn38"]
 [ext_resource type="Script" uid="uid://baftjjlvhyum2" path="res://screens/race/car/components/recovery.gd" id="6_b3ski"]
 [ext_resource type="Script" uid="uid://bpl84sxilwwpq" path="res://screens/race/car/components/ai_driver.gd" id="7_u0012"]
@@ -18,61 +19,12 @@ friction = 0.0
 radius = 0.2
 height = 1.168457
 
-[node name="Car" type="VehicleBody3D" unique_id=1494116475 node_paths=PackedStringArray("wheels", "ai_components")]
+[node name="Car" type="VehicleBody3D" unique_id=1494116475 node_paths=PackedStringArray("ai_components")]
 collision_layer = 2
 collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_tbgi4")
 script = ExtResource("1_yhfra")
-max_engine_force = 120.0
-max_brake = 5.0
-wheels = [NodePath("FrontLeft"), NodePath("FrontRight"), NodePath("BackLeft"), NodePath("BackRight")]
 ai_components = [NodePath("TrackProgress"), NodePath("Recovery"), NodePath("AIDriver"), NodePath("AIDriverMood")]
-
-[node name="FrontLeft" type="VehicleWheel3D" parent="." unique_id=101]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, 0.25, -0.34)
-use_as_traction = true
-use_as_steering = true
-wheel_radius = 0.11
-wheel_rest_length = 0.14
-wheel_friction_slip = 3.0
-suspension_travel = 0.1
-suspension_stiffness = 100.0
-damping_compression = 2.0
-damping_relaxation = 2.5
-
-[node name="FrontRight" type="VehicleWheel3D" parent="." unique_id=102]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, 0.25, -0.34)
-use_as_traction = true
-use_as_steering = true
-wheel_radius = 0.11
-wheel_rest_length = 0.14
-wheel_friction_slip = 3.0
-suspension_travel = 0.1
-suspension_stiffness = 100.0
-damping_compression = 2.0
-damping_relaxation = 2.5
-
-[node name="BackLeft" type="VehicleWheel3D" parent="." unique_id=103]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.28, 0.25, 0.46)
-use_as_traction = true
-wheel_radius = 0.11
-wheel_rest_length = 0.14
-wheel_friction_slip = 3.0
-suspension_travel = 0.1
-suspension_stiffness = 100.0
-damping_compression = 2.0
-damping_relaxation = 2.5
-
-[node name="BackRight" type="VehicleWheel3D" parent="." unique_id=104]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.28, 0.25, 0.46)
-use_as_traction = true
-wheel_radius = 0.11
-wheel_rest_length = 0.14
-wheel_friction_slip = 3.0
-suspension_travel = 0.1
-suspension_stiffness = 100.0
-damping_compression = 2.0
-damping_relaxation = 2.5
 
 [node name="Collision" type="CollisionShape3D" parent="." unique_id=1237095523]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.47572684, -0.16577148)
@@ -91,9 +43,12 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.260367, 0)
 car = NodePath("..")
 
-[node name="Wheels" type="Node3D" parent="." unique_id=2064992516]
-
 [node name="Stickiness" parent="." unique_id=1573998884 node_paths=PackedStringArray("car") instance=ExtResource("4_h48xb")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+car = NodePath("..")
+
+[node name="Upright" parent="." unique_id=1525166917 node_paths=PackedStringArray("car") instance=ExtResource("5_q13se")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 car = NodePath("..")
 
 [node name="Bumper" type="Node" parent="." unique_id=1584811378 node_paths=PackedStringArray("car")]
@@ -114,7 +69,6 @@ script = ExtResource("7_u0012")
 car = NodePath("..")
 progress = NodePath("../TrackProgress")
 mood = NodePath("../AIDriverMood")
-top_speed = 20.0
 
 [node name="AIDriverMood" type="Node" parent="." unique_id=533520091]
 script = ExtResource("8_s371w")

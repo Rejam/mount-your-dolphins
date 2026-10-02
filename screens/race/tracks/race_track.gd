@@ -50,12 +50,12 @@ func get_lap_distance(world_pos: Vector3) -> float:
 	return wrapf(from_start, 0.0, lap_length)
 
 
-## How sharp the road is here, including the fade before bends.
+## Warning how sharp the road is here, including the fade before bends.
 ## 0 on a straight; 0.1 is a 10 m radius bend.
-func get_bend_sharpness(distance_from_start: float) -> float:
-	var nearest_sample := roundi(distance_from_start)
-	# Distances can run past one lap, so wrap back into the map
-	var sample_index := wrapi(nearest_sample, 0, _bend_map.size())
+func get_bend_warning(distance_from_start: float) -> float:
+	# Distances keep counting up across laps; bring it back into one lap
+	var lap_distance := wrapf(distance_from_start, 0.0, lap_length)
+	var sample_index := floori(lap_distance)
 	return _bend_map[sample_index]
 
 

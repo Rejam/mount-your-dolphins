@@ -45,21 +45,17 @@ layout_mode = 2
 layout_mode = 2
 text = "Results"
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VLayout" unique_id=1942275984]
-layout_mode = 2
-size_flags_vertical = 4
-
-[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VLayout/VBoxContainer" unique_id=1148647466]
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer/VLayout" unique_id=1148647466]
 custom_minimum_size = Vector2(0, 320)
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="ResultsList" type="VFlowContainer" parent="MarginContainer/VLayout/VBoxContainer/ScrollContainer" unique_id=570894541]
+[node name="ResultsList" type="VFlowContainer" parent="MarginContainer/VLayout/ScrollContainer" unique_id=570894541]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 10
 
 [node name="NewRaceButton" type="Button" parent="MarginContainer/VLayout" unique_id=1299595445]
 unique_name_in_owner = true

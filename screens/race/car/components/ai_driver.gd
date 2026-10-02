@@ -2,9 +2,6 @@ class_name AIDriver extends Node
 ## Drives the car round the track: aims at a point ahead on the road and slows down for bends.
 
 const TRACK_EDGE_MARGIN := 0.5
-## Sideways pull the car can hold in a bend, in m/s².
-## Higher = faster through corners. Placeholder: tune by watching cars.
-const CORNER_GRIP := 12.0
 ## Metres ahead to aim, plus extra per m/s of speed.
 const LOOKAHEAD_BASE := 2.5
 const LOOKAHEAD_PER_SPEED := 0.35
@@ -13,7 +10,10 @@ const LOOKAHEAD_PER_SPEED := 0.35
 @export var progress: TrackProgress
 @export var mood: AIDriverMood
 
-@export_range(5.0, 20.0, 1) var top_speed := 12.0
+@export_range(5.0, 40.0, 1) var top_speed := 20.0
+## Sideways push the driver will accept in a bend, in m/s².
+## Corner speed is worked out from this and the bend's sharpness.
+@export_range(5.0, 20.0, 1) var cornering_accel := 12.0
 
 
 func _physics_process(delta: float) -> void:
@@ -34,12 +34,12 @@ func _aim_point(at_distance: float) -> Vector3:
 ## How fast to go: the speed the driver wants, capped by what the bend allows.
 func _target_speed(at_distance: float) -> float:
 	var wanted_speed := top_speed * _speed_factor()
-	var sharpness := progress.track.get_bend_sharpness(at_distance)
+	var bend_warning := progress.track.get_bend_warning(at_distance)
 	# A straight has no corner limit
-	if sharpness <= 0.0:
+	if bend_warning <= 0.0:
 		return wanted_speed
 	# Fastest speed the car can hold through a bend this tight
-	var corner_speed := sqrt(CORNER_GRIP / sharpness)
+	var corner_speed := sqrt(cornering_accel / bend_warning)
 	return minf(wanted_speed, corner_speed)
 
 

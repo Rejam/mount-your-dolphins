@@ -43,9 +43,9 @@ func _build_ribbon() -> ArrayMesh:
 		var distance_from_start := sample_index
 		var road := track.sample_transform(distance_from_start)
 
-		var sharpness := track.get_bend_sharpness(distance_from_start)
+		var bend_warning := track.get_bend_warning(distance_from_start)
 		# 0 = straight, 1 = at or beyond max_sharpness
-		var gradient_position := clampf(sharpness / max_sharpness, 0.0, 1.0)
+		var gradient_position := clampf(bend_warning / max_sharpness, 0.0, 1.0)
 		var colour := gradient.sample(gradient_position)
 		colour.a *= opacity
 

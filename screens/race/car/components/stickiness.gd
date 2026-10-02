@@ -3,7 +3,6 @@ class_name Stickiness extends RayCast3D
 ## so it holds crests and loops. No road under it (flipped, rolled,
 ## knocked clear) means no pull, so the car can come off.
 
-@export_range(0.0, 30.0, 1) var strength := 15.0
 @export var car: Car
 
 
@@ -12,5 +11,5 @@ func _physics_process(_delta: float) -> void:
 		return
 	# The road surface's "up" where the ray hits it
 	var road_up := get_collision_normal()
-	var pull_into_road := -road_up * car.mass * strength
+	var pull_into_road := -road_up * car.mass * car.stickiness
 	car.apply_central_force(pull_into_road)
