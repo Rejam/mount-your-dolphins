@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dpplunasx3200"]
+
+[ext_resource type="Script" uid="uid://ice5hliycb5m" path="res://tests/bend_map_debug.gd" id="1_ckos5"]
+
+[node name="BendMapDebug" type="MeshInstance3D" unique_id=375319614]
+script = ExtResource("1_ckos5")

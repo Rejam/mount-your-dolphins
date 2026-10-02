@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://bb871aexa6sbr" path="res://screens/results/result_row.gd" id="1_q2dmp"]
 
 [node name="ResultRow" type="HBoxContainer" unique_id=1246333871]
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 368.0
+offset_bottom = 19.0
 script = ExtResource("1_q2dmp")
 
 [node name="PositionLabel" type="Label" parent="." unique_id=890173503]

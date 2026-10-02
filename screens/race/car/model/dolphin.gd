@@ -1,6 +1,6 @@
 class_name Dolphin extends Node3D
 
-var amplitude := 0.2
+var amplitude := 0.1
 var speed := 2.0
 
 @onready var dolphin_mesh: MeshInstance3D = $Dolphin_mesh
@@ -12,7 +12,7 @@ func _ready():
 	speed = randf_range(1.8, 2.2)
 	
 func _process(_delta):
-	dolphin_mesh.position.y = sin(Time.get_ticks_msec() / 1000.0 * speed) * amplitude
+	dolphin_mesh.position.y = sin(Time.get_ticks_msec() / 1000.0 * speed) * amplitude - 0.1
 
 
 func tint(color: Color) -> void:

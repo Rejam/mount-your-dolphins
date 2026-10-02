@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://eg1c0ychhdn8"]
+
+[ext_resource type="Script" uid="uid://cmjntnajy6uac" path="res://screens/race/car/components/upright.gd" id="1_jf7un"]
+
+[node name="Upright" type="RayCast3D" unique_id=1525166917]
+target_position = Vector3(0, -1.5, 0)
+script = ExtResource("1_jf7un")

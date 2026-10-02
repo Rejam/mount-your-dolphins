@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://bj6iex7ujhkl2"]
+
+[ext_resource type="Script" uid="uid://cwk6vn803tauw" path="res://screens/race/tracks/race_track.gd" id="1_dqwab"]
+[ext_resource type="ArrayMesh" uid="uid://d3lw0431725q8" path="res://tests/test_track/test_track_mesh.res" id="2_dqwab"]
+[ext_resource type="PackedScene" uid="uid://cretspn2bsojw" path="res://screens/race/tracks/road_section.tscn" id="2_rr0d4"]
+[ext_resource type="Shape3D" uid="uid://fu3ye0gikwp6" path="res://tests/test_track/test_track_collision.res" id="3_b0o4o"]
+
+[sub_resource type="Curve3D" id="Curve3D_b0o4o"]
+closed = true
+_data = {
+"points": PackedVector3Array(-5.236, 0, 0, 10, 0, 0, 0, 4, 0, -10, 0, 0, 6.667, 0, 0, 30, 4, 0, -6.667, 0, 0, 3.333, 0, 0, 50, 18, 0, -3.333, 0, 0, 6.667, 0, 0, 60, 18, 0, -6.667, 0, 0, 23.333, 0, 0, 80, 4, 0, -23.333, 0, 0, 6.667, 0, 0, 150, 4, 0, -6.667, 0, 0, 3.142, 0, 0, 170, 4, 0, 0, -3.142, -0.562, 0, 3.142, 0.562, 176, 10, 0.938, 3.142, 0, -0.75, -3.142, 0, 0.75, 170, 16, 3, 0, 3.142, -0.562, 0, -3.142, 0.562, 164, 10, 5.062, -3.142, 0, 0, 6, 0, 0, 170, 4, 6, -6, 0, 0, 3.665, 0, 0, 188, 4, 6, 0, 0, -3.665, 0, 0, 3.665, 195, 4, 13, 3.665, 0, 0, -2, 0, 0, 188, 4, 20, 2, -0.444, 0, -2, 0.444, 0, 182, 4.778, 20, 2, -0.444, 0, -2, 0.444, 0, 176, 6.222, 20, 2, 0, 0, -8.333, 0, 0, 170, 7, 20, 8.333, 0, 0, -2, 0, 0, 145, 7, 20, 2, 0.444, 0, -2, -0.444, 0, 139, 6.222, 20, 2, 0.444, 0, -2, -0.444, 0, 133, 4.778, 20, 2, 0, 0, -12.333, 0, 0, 127, 4, 20, 12.333, 0, 0, -2.5, 0, 0, 90, 4, 20, 2.5, 0, -0.484, -2.5, 0, 0.484, 82.5, 4, 21.531, 2.5, 0, 1.481, -2.5, 0, -1.481, 75, 4, 20, 2.5, 0, 0.2, -2.5, 0, -0.2, 67.5, 4, 16.304, 2.5, 0, -2.094, -2.5, 0, 2.094, 60, 4, 20, 2.5, 0, 0.2, -2.5, 0, -0.2, 52.5, 4, 23.696, 2.5, 0, 1.481, -2.5, 0, -1.481, 45, 4, 20, 2.5, 0, -0.484, -2.5, 0, 0.484, 37.5, 4, 18.469, 2.5, 0, 0, -10, 0, 0, 30, 4, 20, 10, 0, 0, -5.236, 0, 0, 0, 4, 20, 0, 0, 5.236, 0, 0, -5.236, -10, 4, 10),
+"tilts": PackedFloat32Array(0, -0.0613, -0.1124, -0.1328, -0.184, -0.327, -0.3679, -0.2316, 0.0864, 0.4045, 0.5407, 0.504, 0.4817, 0.4594, 0.8542, 1.5979, 1.9928, 1.9417, 1.5221, 0.7531, 0.3335, 0.2579, 0.2422, 0.2262, 0.209, 0.1914, 0.1739, 0.1567, 0.1407, 0.125, 0.0637, 0.0319)
+}
+point_count = 32
+
+[node name="TestTrack2" type="Node3D" unique_id=1427628621]
+script = ExtResource("1_dqwab")
+
+[node name="Route" type="Path3D" parent="." unique_id=556389993]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.14251, 0, 25.595543)
+curve = SubResource("Curve3D_b0o4o")
+
+[node name="Road" parent="." unique_id=361199182 instance=ExtResource("2_rr0d4")]
+
+[node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="." unique_id=903012826]
+mesh = ExtResource("2_dqwab")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CSGBakedMeshInstance3D" unique_id=1939535583]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBakedMeshInstance3D/StaticBody3D" unique_id=1730769434]
+shape = ExtResource("3_b0o4o")

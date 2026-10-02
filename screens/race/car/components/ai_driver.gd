@@ -1,55 +1,51 @@
 class_name AIDriver extends Node
 ## Drives the car round the track: aims at a point ahead on the road and slows down for bends.
 
+const TRACK_EDGE_MARGIN := 0.5
+## Metres ahead to aim, plus extra per m/s of speed.
+const LOOKAHEAD_BASE := 2.5
+const LOOKAHEAD_PER_SPEED := 0.35
+
 @export var car: Car
 @export var progress: TrackProgress
 @export var mood: AIDriverMood
-@export var catch_up: CatchUp
 
-@export_range(5.0, 20.0, 1) var top_speed := 12.0
-@export_range(1.0, 15.0, 1) var corner_speed := 6.0
-## Metres ahead to aim, plus extra per m/s of speed.
-@export_range(1.0, 10.0, 1) var lookahead_base := 2.5
-@export_range(0.0, 1.0, 0.01) var lookahead_per_speed := 0.35
-## How far ahead to look for bends when choosing a speed.
-@export_range(5.0, 20.0, 1) var corner_scan := 10.0
-## Metres kept clear of the road edge.
-@export var edge_margin := 0.5
+@export_range(5.0, 40.0, 1) var top_speed := 20.0
+## Sideways push the driver will accept in a bend, in m/s².
+## Corner speed is worked out from this and the bend's sharpness.
+@export_range(5.0, 20.0, 1) var cornering_accel := 12.0
+
 
 func _physics_process(delta: float) -> void:
 	var distance_from_start := progress.distance_from_start
-	car.drive_toward(_aim_point(distance_from_start), _target_speed(distance_from_start), delta, 1.0 + _boost())
+	car.drive_toward(_aim_point(distance_from_start), _target_speed(distance_from_start), delta)
 
 
 ## Where to steer: a point ahead on the road, in the driver's chosen lane.
 func _aim_point(at_distance: float) -> Vector3:
 	var speed := maxf(car.get_speed(), 0.0)
-	var lookahead := lookahead_base + speed * lookahead_per_speed
+	var lookahead := LOOKAHEAD_BASE + speed * LOOKAHEAD_PER_SPEED
 	var track := progress.track
 	var road := track.sample_transform(at_distance + lookahead)
-	var half_width := track.track_width * 0.5 - edge_margin
+	var half_width := track.track_width * 0.5 - TRACK_EDGE_MARGIN
 	return road.origin + road.basis.x * _lane() * half_width
 
 
-## How fast to go: slower into bends, adjusted by the driver's mood.
+## How fast to go: the speed the driver wants, capped by what the bend allows.
 func _target_speed(at_distance: float) -> float:
-	var straight_speed := top_speed * (1.0 + _boost())
-	var road_speed := lerpf(straight_speed, corner_speed, _bend_amount(at_distance))
-	return road_speed * _speed_factor()
+	var wanted_speed := top_speed * _speed_factor()
+	var bend_warning := progress.track.get_bend_warning(at_distance)
+	# A straight has no corner limit
+	if bend_warning <= 0.0:
+		return wanted_speed
+	# Fastest speed the car can hold through a bend this tight
+	var corner_speed := sqrt(cornering_accel / bend_warning)
+	return minf(wanted_speed, corner_speed)
 
-
-## 0 on a straight .. 1 for a right-angle bend within corner_scan metres.
-func _bend_amount(at_distance: float) -> float:
-	var track := progress.track
-	var here := track.sample_tangent(at_distance)
-	var ahead := track.sample_tangent(at_distance + corner_scan)
-	return clampf(here.angle_to(ahead) / (PI * 0.5), 0.0, 1.0)
-
-func _boost() -> float:
-	return catch_up.boost if catch_up else 0.0
 
 func _lane() -> float:
 	return mood.lane if mood else 0.0
+
 
 func _speed_factor() -> float:
 	return mood.speed_factor if mood else 1.0

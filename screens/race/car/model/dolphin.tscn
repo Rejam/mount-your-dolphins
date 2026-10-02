@@ -12,7 +12,7 @@ material = SubResource("StandardMaterial3D_4lxhm")
 [node name="dolphin" unique_id=501462964 instance=ExtResource("1_63t4k")]
 script = ExtResource("2_4lxhm")
 
-[node name="Dolphin_mesh" parent="." index="0" unique_id=838820942]
+[node name="Dolphin_mesh" parent="." index="0" unique_id=1945056436]
 transform = Transform3D(-0.1, 0, -8.742278e-09, 0, 0.1, 0, 8.742278e-09, 0, -0.1, 0, 0, 0)
 
 [node name="CPUParticles3D" type="CPUParticles3D" parent="Dolphin_mesh" index="0" unique_id=1810724178]

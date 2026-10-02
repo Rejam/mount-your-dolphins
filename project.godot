@@ -65,6 +65,11 @@ camera_auto_mode={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="world"
+3d_physics/layer_2="cars"
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
