@@ -1,7 +1,6 @@
 class_name Bumper extends Node
 ## Exaggerates collisions with other cars: pushes them apart and spins them.
 
-
 @export var car: Car
 
 ## Multiplier on how hard the physics hit was. Adds on top of min_kick.
@@ -12,7 +11,7 @@ class_name Bumper extends Node
 @export_range(0.0, 10.0, 0.5) var max_spin := 3.0
 ## Upward pop as a fraction of the push. Lifting the wheels off the road
 ## stops tyre grip soaking up the push, so hits actually move the car.
-@export_range(0.0, 1.0, 0.1) var lift := 0.5
+@export_range(0.0, 1.0, 0.1) var lift := 0.8
 
 var _prev_linear_velocity: Vector3
 
@@ -20,6 +19,7 @@ func _ready() -> void:
 	car.contact_monitor = true
 	car.max_contacts_reported = 4
 	car.body_entered.connect(_on_body_entered)
+
 
 func _physics_process(_delta: float) -> void:
 	_prev_linear_velocity = car.linear_velocity

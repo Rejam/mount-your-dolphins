@@ -1,17 +1,16 @@
-class_name Stickiness extends Node
-## Pulls the car toward the surface under its wheels, so it can hold steep slopes.
+class_name Stickiness extends RayCast3D
+## Pulls the car toward the road under it, even when the wheels lift,
+## so it holds crests and loops. No road under it (flipped, rolled,
+## knocked clear) means no pull, so the car can come off.
 
 @export_range(0.0, 30.0, 1) var strength := 15.0
 @export var car: Car
 
+
 func _physics_process(_delta: float) -> void:
-	var touching := 0
-	for wheel in car.wheels:
-		if wheel.is_in_contact():
-			touching += 1
-	if touching > 0:
-		var grip := float(touching) / car.wheels.size()
-		var mass := car.mass
-		var global_basis_y := car.global_basis.y
-		var force := -global_basis_y * mass * strength * grip
-		car.apply_central_force(force)
+	if not is_colliding():
+		return
+	# The road surface's "up" where the ray hits it
+	var road_up := get_collision_normal()
+	var pull_into_road := -road_up * car.mass * strength
+	car.apply_central_force(pull_into_road)
