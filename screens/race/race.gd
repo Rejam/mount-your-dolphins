@@ -36,6 +36,8 @@ func _ready() -> void:
 	race_director.start_race(cars)
 	race_director.race_ended.connect(_on_race_ended)
 	position_list.car_clicked.connect(race_camera.select_by_user)
+	Twitch.boost_requested.connect(_on_boost_requested)
+
 
 ## Builds the track. Returns false if no scene or the scene isn't a RaceTrack.
 func _spawn_track(track_scene: PackedScene) -> bool:
@@ -88,3 +90,18 @@ func _can_race(car: Car) -> bool:
 
 func _on_race_ended(results: Array[RaceResult]) -> void:
 	get_tree().change_scene_to_node(Results.create(results))
+
+
+func _on_boost_requested(player: TwitchPlayer) -> void:
+	var car := _find_car(player.user_id)
+	if not car:
+		return
+	var boost := Boost.find_on(car)
+	if boost:
+		boost.activate()
+
+func _find_car(user_id: String) -> Car:
+	for car in cars:
+		if car.racer.user_id == user_id:
+			return car
+	return null

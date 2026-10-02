@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://bpl84sxilwwpq" path="res://screens/race/car/components/ai_driver.gd" id="7_u0012"]
 [ext_resource type="Script" uid="uid://dudss5xwec7cs" path="res://screens/race/car/components/ai_driver_mood.gd" id="8_s371w"]
 [ext_resource type="Script" uid="uid://csi1abwndpghx" path="res://screens/race/car/components/exit_on_finish.gd" id="10_dmhln"]
+[ext_resource type="Script" uid="uid://2dolthsjucos" path="res://screens/race/car/components/boost.gd" id="12_dww2g"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tbgi4"]
 friction = 0.0
@@ -24,7 +25,7 @@ collision_layer = 2
 collision_mask = 3
 physics_material_override = SubResource("PhysicsMaterial_tbgi4")
 script = ExtResource("1_yhfra")
-ai_components = [NodePath("TrackProgress"), NodePath("Recovery"), NodePath("AIDriver"), NodePath("AIDriverMood")]
+ai_components = [NodePath("TrackProgress"), NodePath("Recovery"), NodePath("AIDriver"), NodePath("AIDriverMood"), NodePath("Boost")]
 
 [node name="Collision" type="CollisionShape3D" parent="." unique_id=1237095523]
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0.47572684, -0.16577148)
@@ -79,3 +80,9 @@ script = ExtResource("10_dmhln")
 car = NodePath("..")
 progress = NodePath("../TrackProgress")
 model = NodePath("../Model")
+
+[node name="Boost" type="Node" parent="." unique_id=1631377023 node_paths=PackedStringArray("car", "progress", "driver")]
+script = ExtResource("12_dww2g")
+car = NodePath("..")
+progress = NodePath("../TrackProgress")
+driver = NodePath("../AIDriver")

@@ -15,6 +15,8 @@ func _ready() -> void:
 	if debug:		
 		var bend_map_debug := BendMapDebug.create()
 		scene.add_child(bend_map_debug)
+	
+	scene.add_child(BoostDebug.new())
 	get_tree().change_scene_to_node.call_deferred(scene)
 
 func _make_entries() -> Array[RacerEntry]:

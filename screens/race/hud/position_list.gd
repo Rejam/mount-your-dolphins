@@ -53,4 +53,16 @@ func _get_row(car: Car) -> PositionRow:
 		row.clicked.connect(car_clicked.emit)
 		add_child(row)
 		_rows[car] = row
+		_connect_boost(car, row)
 	return _rows[car]
+
+
+## Starts the row at the car's current boost count and keeps it updated.
+## A car without a Boost shows no icons.
+func _connect_boost(car: Car, row: PositionRow) -> void:
+	var boost := Boost.find_on(car)
+	if not boost:
+		row.show_boosts_left(0)
+		return
+	row.show_boosts_left(boost.boosts_left)
+	boost.boosts_left_changed.connect(row.show_boosts_left)

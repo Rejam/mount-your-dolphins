@@ -46,6 +46,10 @@ const BACK_WHEEL_POSITION := Vector3(0.0, 0.25, 0.46)
 ## stops tyre grip soaking up the push, so hits actually move the car.
 @export_range(0.0, 2.0, 0.1) var bumper_lift := 0.9
 
+@export_group("Boost")
+@export_range(1, 5, 1) var  boosts_per_race := 2
+@export_range(1.0, 20.0, 0.5) var  boost_duration := 7.0
+@export_range(1.0, 5.0, 0.5) var  boost_speed_multiplier := 1.5
 
 ## Car owner
 var racer: RacerEntry

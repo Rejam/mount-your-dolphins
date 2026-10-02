@@ -13,6 +13,7 @@ const SCOPES := [
 signal login_completed(user_login: String)
 signal login_failed
 signal entry_received(player: TwitchPlayer)
+signal boost_requested(player: TwitchPlayer)
 signal chat_state_changed(state: TwitchChat.ChatState)
 #signal reward_redeemed(user: String, reward_title: String, user_input: String)
 
@@ -89,11 +90,10 @@ func _on_chat_message(player: TwitchPlayer, message: String) -> void:
 		return
 	var command := parts[0]
 	if command.to_lower() == "!mount":
-		submit_entry(player)
+		entry_received.emit(player)
+	elif command.to_lower() == "!boost":
+		boost_requested.emit(player)
 
 
-func submit_entry(player: TwitchPlayer) -> void:
-	entry_received.emit(player)
-	
 #func _on_redemption(user: String, reward_title: String, user_input: String) -> void:
 	#reward_redeemed.emit(user, reward_title, user_input)
