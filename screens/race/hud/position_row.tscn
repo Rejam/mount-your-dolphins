@@ -2,6 +2,20 @@
 
 [ext_resource type="Script" uid="uid://g2oowlyu8lof" path="res://screens/race/hud/position_row.gd" id="1_v4ej1"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hiwug"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.87058824, 0, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+shadow_color = Color(0, 0, 0, 1)
+shadow_size = 4
+
 [node name="PanelContainer" type="PanelContainer" unique_id=1191827700]
 custom_maximum_size = Vector2(300, -1)
 offset_right = 6.0
@@ -50,3 +64,8 @@ unique_name_in_owner = true
 layout_mode = 2
 focus_mode = 0
 theme_type_variation = &"FlatButton"
+
+[node name="BoostingIndicator" type="PanelContainer" parent="." unique_id=1348897674]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hiwug")

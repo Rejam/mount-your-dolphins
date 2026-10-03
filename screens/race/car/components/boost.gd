@@ -79,9 +79,11 @@ static func find_on(parent: Node) -> Boost:
 	return null
 
 
-## Quick ramp from the car's speed up to boost speed, then holds.
+## Quick ramp from the car's speed up to boost speed, then follows it.
+## Boost speed is the multiplier above what this driver would do here.
 func _current_speed() -> float:
-	var boost_speed := driver.top_speed * speed_multiplier
+	var normal_speed := driver.target_speed_at(_distance)
+	var boost_speed := normal_speed * speed_multiplier
 	var ramp := minf(_time_boosting / RAMP_UP_TIME, 1.0)
 	return lerpf(_start_speed, boost_speed, ramp)
 

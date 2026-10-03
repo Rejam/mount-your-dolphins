@@ -18,7 +18,7 @@ const LOOKAHEAD_PER_SPEED := 0.35
 
 func _physics_process(delta: float) -> void:
 	var distance_from_start := progress.distance_from_start
-	car.drive_toward(_aim_point(distance_from_start), _target_speed(distance_from_start), delta)
+	car.drive_toward(_aim_point(distance_from_start), target_speed_at(distance_from_start), delta)
 
 
 ## Where to steer: a point ahead on the road, in the driver's chosen lane.
@@ -32,7 +32,7 @@ func _aim_point(at_distance: float) -> Vector3:
 
 
 ## How fast to go: the speed the driver wants, capped by what the bend allows.
-func _target_speed(at_distance: float) -> float:
+func target_speed_at(at_distance: float) -> float:
 	var wanted_speed := top_speed * _speed_factor()
 	var bend_warning := progress.track.get_bend_warning(at_distance)
 	# A straight has no corner limit

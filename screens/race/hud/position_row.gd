@@ -2,6 +2,8 @@ class_name PositionRow extends PanelContainer
 
 const POSITION_ROW_UID := "uid://dw3omxxjpgxsy"
 const FIRE_ICON_UID := preload("uid://b64if2cnan822")
+const SHAKE_DISTANCE := 1.0
+const SHAKE_SPEED := 40.0
 
 signal clicked(car: Car)
 
@@ -9,10 +11,12 @@ signal clicked(car: Car)
 @onready var name_label: Label = %NameLabel
 @onready var click_area: Button = %ClickArea
 @onready var boost_icons: HBoxContainer = %BoostIcons
+@onready var boosting_indicator: PanelContainer = %BoostingIndicator
 
 ## The car this row is showing.
 var car: Car
-
+var _rest_position: Vector2
+var is_shaking: bool
 
 static func create() -> PositionRow:
 	var row = load(POSITION_ROW_UID).instantiate() as PositionRow
@@ -21,6 +25,18 @@ static func create() -> PositionRow:
 
 func _ready() -> void:
 	click_area.pressed.connect(_handle_row_pressed)
+	show_is_boosting(false)
+	_rest_position = position
+
+
+func _process(_delta: float) -> void:
+	if is_shaking:
+		var time := Time.get_ticks_msec() / 1000.0 * SHAKE_SPEED
+		# Two waves at unrelated speeds, so the motion doesn't repeat visibly
+		var shake := sin(time) + sin(time * 1.7)
+		# Sum of two waves, so halve it to stay within SHAKE_DISTANCE.
+		boosting_indicator.position.x = shake * 0.5 * SHAKE_DISTANCE
+		boosting_indicator.position.y = shake * -0.5 * SHAKE_DISTANCE
 
 
 func show_placing(placing: Standings.Placing) -> void:
@@ -43,3 +59,9 @@ func show_boosts_left(count: int) -> void:
 		icon.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
 		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		boost_icons.add_child(icon)
+
+
+func show_is_boosting(is_boosting: bool) -> void:
+	is_shaking = is_boosting
+	boosting_indicator.visible = is_boosting
+		

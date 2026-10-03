@@ -66,3 +66,5 @@ func _connect_boost(car: Car, row: PositionRow) -> void:
 		return
 	row.show_boosts_left(boost.boosts_left)
 	boost.boosts_left_changed.connect(row.show_boosts_left)
+	boost.boost_started.connect(row.show_is_boosting.bind(true))
+	boost.boost_ended.connect(row.show_is_boosting.bind(false))

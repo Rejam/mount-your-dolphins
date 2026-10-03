@@ -48,8 +48,8 @@ const BACK_WHEEL_POSITION := Vector3(0.0, 0.25, 0.46)
 
 @export_group("Boost")
 @export_range(1, 5, 1) var  boosts_per_race := 2
-@export_range(1.0, 20.0, 0.5) var  boost_duration := 7.0
-@export_range(1.0, 5.0, 0.5) var  boost_speed_multiplier := 1.5
+@export_range(1.0, 20.0, 0.5) var  boost_duration := 5.0
+@export_range(1.0, 5.0, 0.1) var  boost_speed_multiplier := 1.7
 
 ## Car owner
 var racer: RacerEntry
