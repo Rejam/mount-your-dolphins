@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://c1sm2ruq1877n"]
+
+[ext_resource type="Texture2D" uid="uid://bqbq6eunwp68s" path="res://assets/energy_1.png" id="1_17kac"]
+[ext_resource type="Script" uid="uid://srfh16byx470" path="res://screens/race/car/components/boost_effect.gd" id="1_xhuss"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xhuss"]
+transparency = 1
+blend_mode = 1
+shading_mode = 0
+albedo_color = Color(1, 1, 0.05490196, 1)
+albedo_texture = ExtResource("1_17kac")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+point_size = 128.0
+use_z_clip_scale = true
+z_clip_scale = 0.01
+fov_override = 92.8
+proximity_fade_distance = 0.01
+stencil_flags = 2
+stencil_outline_thickness = 0.783
+
+[sub_resource type="CurveTexture" id="CurveTexture_6tw4x"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_sbwky"]
+lifetime_randomness = 1.0
+particle_flag_rotate_y = true
+emission_shape_scale = Vector3(1, 1, -1)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 0, 1)
+emission_ring_height = 0.2
+emission_ring_radius = 0.2
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 38.0
+angle_min = -89.99999
+angle_max = 90.000015
+direction = Vector3(0, 0, 1)
+spread = 15.0
+initial_velocity_min = 3.0
+initial_velocity_max = 3.0
+gravity = Vector3(0, 0, 8)
+emission_curve = SubResource("CurveTexture_6tw4x")
+
+[sub_resource type="QuadMesh" id="QuadMesh_7owj3"]
+
+[node name="BoostEffect" type="GPUParticles3D" unique_id=1227738546]
+material_override = SubResource("StandardMaterial3D_xhuss")
+emitting = false
+amount = 50
+lifetime = 0.2
+process_material = SubResource("ParticleProcessMaterial_sbwky")
+draw_pass_1 = SubResource("QuadMesh_7owj3")
+script = ExtResource("1_xhuss")

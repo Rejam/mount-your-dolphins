@@ -3,6 +3,8 @@ class_name Boost extends Node
 ## much faster than normal. Cars in the way get shoved aside.
 
 signal boosts_left_changed(boosts_left: int)
+signal boost_started
+signal boost_ended
 
 ## Seconds to get from the car's current speed to boost speed.
 const RAMP_UP_TIME := 0.3
@@ -32,6 +34,7 @@ func _ready() -> void:
 	duration = car.boost_duration
 	speed_multiplier = car.boost_speed_multiplier
 	boosts_left = boosts_per_race
+	progress.finished.connect(_on_finished)
 
 
 func _physics_process(delta: float) -> void:
@@ -52,8 +55,9 @@ func activate() -> bool:
 		return false
 
 	boosts_left -= 1
-	boosts_left_changed.emit(boosts_left)
 	is_boosting = true
+	boosts_left_changed.emit(boosts_left)
+	boost_started.emit()
 	_time_boosting = 0.0
 	_distance = progress.distance_from_start
 	_start_speed = maxf(car.get_speed(), 0.0)
@@ -95,6 +99,13 @@ func _rail_transform() -> Transform3D:
 func _end(speed: float) -> void:
 	is_boosting = false
 	car.freeze = false
+	boost_ended.emit()
 	# Carry on at boost speed rather than stopping dead
 	var forward := -car.global_basis.z
 	car.linear_velocity = forward * speed
+
+
+## Finishing stops all processing, so a boost would never reach _end() by itself.
+func _on_finished(_car: Car) -> void:
+	if is_boosting:
+		_end(_current_speed())

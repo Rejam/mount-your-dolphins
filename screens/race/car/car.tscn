@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://dudss5xwec7cs" path="res://screens/race/car/components/ai_driver_mood.gd" id="8_s371w"]
 [ext_resource type="Script" uid="uid://csi1abwndpghx" path="res://screens/race/car/components/exit_on_finish.gd" id="10_dmhln"]
 [ext_resource type="Script" uid="uid://2dolthsjucos" path="res://screens/race/car/components/boost.gd" id="12_dww2g"]
+[ext_resource type="PackedScene" uid="uid://c1sm2ruq1877n" path="res://screens/race/car/components/boost_effect.tscn" id="13_wwtcq"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_tbgi4"]
 friction = 0.0
@@ -86,3 +87,7 @@ script = ExtResource("12_dww2g")
 car = NodePath("..")
 progress = NodePath("../TrackProgress")
 driver = NodePath("../AIDriver")
+
+[node name="BoostEffect" parent="." unique_id=174194090 node_paths=PackedStringArray("boost") instance=ExtResource("13_wwtcq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.34333432, -0.80452824)
+boost = NodePath("../Boost")
