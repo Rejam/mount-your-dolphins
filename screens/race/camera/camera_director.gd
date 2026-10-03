@@ -58,7 +58,7 @@ func _on_user_changed_camera_target(_target: Node3D) -> void:
 	_enter_manual()
 
 
-func _enter_auto(force_auto = false) -> void:
+func _enter_auto(force_auto := false) -> void:
 	if mode == Mode.AUTO and not force_auto:
 		return
 	mode = Mode.AUTO

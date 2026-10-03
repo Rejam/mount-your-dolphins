@@ -1,5 +1,5 @@
 class_name BoostDebug extends Node
-## Test only: press B to boost a random car.
+## Test only: press B to boost the car the camera is following.
 
 const BOOST_KEY := KEY_B
 

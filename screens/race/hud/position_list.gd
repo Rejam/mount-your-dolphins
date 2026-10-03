@@ -65,6 +65,8 @@ func _connect_boost(car: Car, row: PositionRow) -> void:
 		row.show_boosts_left(0)
 		return
 	row.show_boosts_left(boost.boosts_left)
+	# A row can first appear while its car is already boosting
+	row.show_is_boosting(boost.is_boosting)
 	boost.boosts_left_changed.connect(row.show_boosts_left)
 	boost.boost_started.connect(row.show_is_boosting.bind(true))
 	boost.boost_ended.connect(row.show_is_boosting.bind(false))

@@ -4,12 +4,12 @@ class_name ExitOnFinish extends Node
 @export var progress: TrackProgress
 @export var model: Node3D
 
-@export var leap_height := 5
+@export var leap_height := 5.0
 ## How far forward the model travels over the whole leap.
 @export var leap_distance := 5.0
 ## How far below the road the model ends, so it disappears "into the water".
 @export var dive_depth := 20.0
-@export var leap_seconds := 2
+@export var leap_seconds := 2.0
 @export var leap_pitch_degrees := 45.0
 
 ## Share of the leap spent rising; the rest is the fall.

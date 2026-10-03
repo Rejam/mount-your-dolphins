@@ -61,7 +61,7 @@ func _flash(text: String, color: Color, hold_seconds: float) -> void:
 	if _flash_tween:
 		_flash_tween.kill()
 
-	var label = _announce_label
+	var label := _announce_label
 	label.text = text
 	label.add_theme_color_override("font_color", color)
 	label.scale = Vector2.ONE * POP_START_SCALE

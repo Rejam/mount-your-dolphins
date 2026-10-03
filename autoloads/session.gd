@@ -19,7 +19,11 @@ func shuffle_tracks() -> void:
 	_shuffled_tracks.shuffle()
 
 
+## The next track in the shuffled order, or null if none were added.
+## Race reports a missing track itself.
 func next_track() -> PackedScene:
+	if _shuffled_tracks.is_empty():
+		return null
 	var track = _shuffled_tracks[_current_track_index]
 	_current_track_index += 1
 	return track
