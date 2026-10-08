@@ -29,7 +29,7 @@ func next_track() -> TrackAndDirection:
 
 func _forward_then_reversed() -> void:
 	for track in tracks:
-		_playlist.append(TrackAndDirection.create(track, Race.TrackDirection.FORWARD))
+		_playlist.append(TrackAndDirection.create(track, RaceTrack.TrackDirection.FORWARD))
 
 	for track in tracks:
-		_playlist.append(TrackAndDirection.create(track, Race.TrackDirection.BACKWARD))
+		_playlist.append(TrackAndDirection.create(track, RaceTrack.TrackDirection.BACKWARD))

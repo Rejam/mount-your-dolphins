@@ -1,7 +1,7 @@
 extends Node
 
 @export var track: PackedScene
-@export var direction: Race.TrackDirection
+@export var direction: RaceTrack.TrackDirection
 @export var dummy_names: DummyNameList
 @export var dummy_count:= 5
 @export var debug := false

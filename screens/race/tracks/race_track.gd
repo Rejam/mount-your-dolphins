@@ -4,6 +4,8 @@ class_name RaceTrack extends Node3D
 const GROUP := &"race_track"
 const BEND_FADE_PER_METRE := 0.005
 
+enum TrackDirection { RANDOM, FORWARD, BACKWARD }
+
 @export var track_width := 4.0
 @export var lap_count := 3
 ## Marks the start/finish line. Slide its Progress along the Route to move

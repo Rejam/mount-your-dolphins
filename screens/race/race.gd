@@ -2,14 +2,13 @@ class_name Race extends Node3D
 ## Runs the race: spawns cars, has them driven round the track
 
 const SCENE_UID := "uid://bcjuf0jo60p2d"
-enum TrackDirection { RANDOM, FORWARD, BACKWARD }
 
 var cars: Array[Car]
 var track: RaceTrack
 
 var _entries: Array[RacerEntry]
 var _track_scene: PackedScene
-var _track_direction: TrackDirection
+var _track_direction: RaceTrack.TrackDirection
 
 @onready var cars_node: Node3D = %Cars
 @onready var race_camera: RaceCamera = %RaceCamera
@@ -17,7 +16,7 @@ var _track_direction: TrackDirection
 @onready var position_list: PositionList = %PositionList
 
 
-static func create(entries: Array[RacerEntry], track_scene: PackedScene, direction:= TrackDirection.RANDOM) -> Race:
+static func create(entries: Array[RacerEntry], track_scene: PackedScene, direction:= RaceTrack.TrackDirection.RANDOM) -> Race:
 	var scene: Race = load(SCENE_UID).instantiate()
 	scene._entries = entries
 	scene._track_scene = track_scene
@@ -55,11 +54,11 @@ func _spawn_track(track_scene: PackedScene) -> bool:
 	# Direction must be set before the track enters the tree.
 	var is_track_reverse: bool
 	match _track_direction:
-		TrackDirection.RANDOM:
+		RaceTrack.TrackDirection.RANDOM:
 			is_track_reverse = randi_range(0, 1) == 1
-		TrackDirection.BACKWARD:
+		RaceTrack.TrackDirection.BACKWARD:
 			is_track_reverse = true
-		TrackDirection.FORWARD:
+		RaceTrack.TrackDirection.FORWARD:
 			is_track_reverse = false
 	
 	track.reversed = is_track_reverse
