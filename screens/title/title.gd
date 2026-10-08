@@ -8,5 +8,5 @@ func _ready() -> void:
 
 func _on_start_pressed() -> void:
 	var game = Registration.create()
-	MYDSession.shuffle_tracks()
+	MYDSession.prepare_playlist()
 	get_tree().change_scene_to_node(game)

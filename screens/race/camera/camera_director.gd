@@ -1,5 +1,11 @@
 class_name CameraDirector extends Node
 
+const INTRO_ZOOM_START_DISTANCE := 150.0
+## Intro start angle above the horizon. Near 90 = looking straight down.
+const INTRO_PITCH_DEG := 75.0
+const INTRO_SECONDS := 3.0
+const INTRO_SPIN_DEG := 120.0
+
 enum Mode { AUTO, MANUAL }
 
 @export var camera: RaceCamera
@@ -15,10 +21,13 @@ var _saved_manual_camera_settings := {
 	"pitch_deg": null,
 	"yaw_deg": null
 }
+var _intro_tween: Tween
+
 
 func _ready() -> void:
 	camera.user_changed_camera_target.connect(_on_user_changed_camera_target)
 	_enter_auto(true)
+	_play_intro()
 
 
 func _process(_delta: float) -> void:
@@ -74,3 +83,23 @@ func _enter_manual() -> void:
 	var saved_pitch_deg: float = _saved_manual_camera_settings.pitch_deg
 	var saved_yaw_deg: float = _saved_manual_camera_settings.yaw_deg
 	camera.set_view(saved_distance, saved_pitch_deg, saved_yaw_deg)
+
+
+func _play_intro() -> void:
+	# Set directly to avoid clamping on camera.set_view
+	camera.distance = INTRO_ZOOM_START_DISTANCE
+	camera.pitch_deg = INTRO_PITCH_DEG
+	# Start turned away from the auto angle, so the intro spins back round to it.
+	camera.yaw_deg = auto_yaw_deg - INTRO_SPIN_DEG
+	
+	_intro_tween = create_tween()
+	_intro_tween.tween_interval(1)
+	# Ease out: drops fast from the sky, slows as it reaches the grid.
+	_intro_tween.set_trans(Tween.TRANS_CUBIC)
+	_intro_tween.set_ease(Tween.EASE_OUT)
+	
+	_intro_tween.tween_property(camera, "distance", auto_distance, INTRO_SECONDS)
+	_intro_tween.parallel()
+	_intro_tween.tween_property(camera, "pitch_deg", auto_pitch_deg, INTRO_SECONDS)
+	_intro_tween.parallel()
+	_intro_tween.tween_property(camera, "yaw_deg", auto_yaw_deg, INTRO_SECONDS)

@@ -43,8 +43,11 @@ func _on_add_dummy_button_pressed() -> void:
 func _on_race_button_pressed() -> void:
 	race_button.disabled = true
 	_entries.shuffle()
-	var track := MYDSession.next_track()
-	var race_scene := Race.create(_entries, track)
+	var track_and_dir := MYDSession.next_track()
+	if not track_and_dir:
+		push_error("Registration _on_race_button_pressed: No Tracks available")
+		return
+	var race_scene := Race.create(_entries, track_and_dir.track, track_and_dir.direction)
 	get_tree().change_scene_to_node(race_scene)
 
 

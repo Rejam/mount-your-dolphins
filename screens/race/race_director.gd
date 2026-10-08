@@ -20,7 +20,6 @@ var _race_time := 0.0
 var race_time: float:
 	get: return _race_time
 
-
 func _ready() -> void:
 	grid_hold_countdown.ended.connect(_on_grid_hold_countdown_ended)
 	

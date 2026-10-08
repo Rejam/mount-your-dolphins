@@ -4,7 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://bhhca40n8ccy7" path="res://screens/race/tracks/track_01/track_01.tscn" id="2_nt3m7"]
 [ext_resource type="PackedScene" uid="uid://cttysw4rikq12" path="res://screens/race/tracks/track_02/track_02.tscn" id="3_6uee5"]
 [ext_resource type="PackedScene" uid="uid://cg2sm8ke26dxu" path="res://screens/race/tracks/track_03/track_03.tscn" id="4_6uee5"]
+[ext_resource type="PackedScene" uid="uid://2kd8ea8eawm2" path="res://screens/race/tracks/track_04/track_04.tscn" id="5_yd8ha"]
 
 [node name="Session" type="Node" unique_id=961916480]
 script = ExtResource("1_4pg7r")
-tracks = Array[PackedScene]([ExtResource("2_nt3m7"), ExtResource("3_6uee5"), ExtResource("4_6uee5")])
+tracks = Array[PackedScene]([ExtResource("2_nt3m7"), ExtResource("3_6uee5"), ExtResource("4_6uee5"), ExtResource("5_yd8ha")])

@@ -1,9 +1,9 @@
-[gd_scene format=3 uid="uid://bj6iex7ujhkl2"]
+[gd_scene format=3 uid="uid://2kd8ea8eawm2"]
 
-[ext_resource type="Script" uid="uid://cwk6vn803tauw" path="res://screens/race/tracks/race_track.gd" id="1_dqwab"]
-[ext_resource type="ArrayMesh" uid="uid://d3lw0431725q8" path="res://tests/test_track/test_track_mesh.res" id="2_dqwab"]
-[ext_resource type="PackedScene" uid="uid://cretspn2bsojw" path="res://screens/race/tracks/road_section.tscn" id="2_rr0d4"]
-[ext_resource type="Shape3D" uid="uid://fu3ye0gikwp6" path="res://tests/test_track/test_track_collision.res" id="3_b0o4o"]
+[ext_resource type="Script" uid="uid://cwk6vn803tauw" path="res://screens/race/tracks/race_track.gd" id="1_n31tb"]
+[ext_resource type="PackedScene" uid="uid://dgvy32vnh6ths" path="res://screens/race/props/start_line.tscn" id="2_33u2u"]
+[ext_resource type="ArrayMesh" uid="uid://d3lw0431725q8" path="res://tests/test_track/test_track_mesh.res" id="3_21ogb"]
+[ext_resource type="Shape3D" uid="uid://fu3ye0gikwp6" path="res://tests/test_track/test_track_collision.res" id="4_h0hs5"]
 
 [sub_resource type="Curve3D" id="Curve3D_b0o4o"]
 closed = true
@@ -13,19 +13,23 @@ _data = {
 }
 point_count = 32
 
-[node name="TestTrack" type="Node3D" unique_id=1427628621]
-script = ExtResource("1_dqwab")
+[node name="Track04" type="Node3D" unique_id=1427628621]
+script = ExtResource("1_n31tb")
 
 [node name="Route" type="Path3D" parent="." unique_id=556389993]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -43.14251, 0, 25.595543)
 curve = SubResource("Curve3D_b0o4o")
 
-[node name="Road" parent="." unique_id=361199182 instance=ExtResource("2_rr0d4")]
+[node name="PathFollow3D" type="PathFollow3D" parent="Route" unique_id=1630644188]
+transform = Transform3D(-4.3711307e-08, -6.035295e-11, -0.9999998, -1.2689259e-07, 0.99999887, -6.034746e-11, 0.9999991, 1.2689256e-07, -4.371134e-08, 0.6756557, 4, 0)
+progress = 0.6756557
+
+[node name="StartLine" parent="Route/PathFollow3D" unique_id=558001950 instance=ExtResource("2_33u2u")]
 
 [node name="CSGBakedMeshInstance3D" type="MeshInstance3D" parent="." unique_id=903012826]
-mesh = ExtResource("2_dqwab")
+mesh = ExtResource("3_21ogb")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="CSGBakedMeshInstance3D" unique_id=1939535583]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBakedMeshInstance3D/StaticBody3D" unique_id=1730769434]
-shape = ExtResource("3_b0o4o")
+shape = ExtResource("4_h0hs5")
